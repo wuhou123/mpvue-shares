@@ -16,9 +16,10 @@ app.$mount();
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   config: {
-    // 注意，页面级可配置属性相当于只是`src/main.js`中配置里的`window`部分
-    "navigationBarTitleText": "",
-    "enablePullDownRefresh": true
+    "navigationBarTitleText": "首页",
+    "usingComponents": {
+      "skeletons": "/static/components/skeletons/index"
+    }
   }
 });
 
@@ -93,14 +94,35 @@ if (false) {(function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_asyncToGenerator__ = __webpack_require__(181);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_asyncToGenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_asyncToGenerator__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_extends__ = __webpack_require__(48);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_extends__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__api_allApi__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__store_mutation_types__ = __webpack_require__(22);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_vuex__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_core_js_promise__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_core_js_promise___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_babel_runtime_core_js_promise__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_extends__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_extends__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__api_allApi__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__store_mutation_types__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_vuex__ = __webpack_require__(19);
 
 
 
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -112,30 +134,70 @@ if (false) {(function () {
 
 /* harmony default export */ __webpack_exports__["a"] = ({
   data: function data() {
-    return {};
+    return {
+      is_capture_nodes: false,
+      is_complete: false
+    };
   },
 
 
-  methods: __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_5_vuex__["b" /* mapMutations */])({
+  methods: __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_6_vuex__["b" /* mapMutations */])({
     setLogin: "SET_LOGIN",
     setCode: "SET_CODE",
     setUserInfo: "SET_USERINFO"
-  })),
-  onLoad: function onLoad() {},
+  }), {
+    getList: function getList() {
+      return new __WEBPACK_IMPORTED_MODULE_2_babel_runtime_core_js_promise___default.a(function (resolve, reject) {
+        setTimeout(function () {
+          resolve('完成');
+        }, 5000);
+      });
+    },
+    init: function init() {
+      var _this = this;
+
+      return __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_asyncToGenerator___default()( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
+        var complete;
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return _this.getList();
+
+              case 2:
+                complete = _context.sent;
+
+                console.log(complete);
+                _this.is_complete = true;
+
+              case 5:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, _this);
+      }))();
+    }
+  }),
+  onLoad: function onLoad() {
+    this.is_capture_nodes = true;
+    this.init();
+  },
   onShow: function onShow() {},
   onPullDownRefresh: function onPullDownRefresh() {
-    var _this = this;
+    var _this2 = this;
 
-    return __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_asyncToGenerator___default()( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
-      return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
+    return __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_asyncToGenerator___default()( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee2() {
+      return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee2$(_context2) {
         while (1) {
-          switch (_context.prev = _context.next) {
+          switch (_context2.prev = _context2.next) {
             case 0:
             case "end":
-              return _context.stop();
+              return _context2.stop();
           }
         }
-      }, _callee, _this);
+      }, _callee2, _this2);
     }))();
   },
 
@@ -151,7 +213,27 @@ if (false) {(function () {
 
 "use strict";
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', [_vm._v("测试")])
+  return _c('div', {
+    staticClass: "container skeletons"
+  }, [_c('div', {
+    staticClass: "author skeletons-circle"
+  }, [_vm._v("\n    Titan_star\n  ")]), _vm._v(" "), _c('div', {
+    staticClass: "skeletons-rect"
+  }, [_c('p', [_vm._v("\n      首屏渲染-小程序骨架屏动态注入组件\n    ")])], 1), _vm._v(" "), _c('div', {
+    staticClass: "usermotto"
+  }, [_c('p', {
+    staticClass: "skeletons-rect"
+  }, [_vm._v("Hello skeletons")])], 1), _vm._v(" "), _c('skeletons', {
+    attrs: {
+      "is_capture_nodes": _vm.is_capture_nodes,
+      "is_complete": _vm.is_complete,
+      "loading": "music",
+      "block_animation": "shine",
+      "selector": "skeletons",
+      "background": "#fff",
+      "mpcomid": '0'
+    }
+  })], 1)
 }
 var staticRenderFns = []
 render._withStripped = true

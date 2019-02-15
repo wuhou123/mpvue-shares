@@ -1,3 +1,12 @@
 <template name="index$45a16214">
-  <view class="_div data-v-51a5663d">测试</view>
+  <view class="_div data-v-51a5663d container skeletons">
+    <view class="_div data-v-51a5663d author skeletons-circle"> Titan_star </view>
+    <view class="_div data-v-51a5663d skeletons-rect">
+      <view class="_p data-v-51a5663d"> 首屏渲染-小程序骨架屏动态注入组件 </view>
+    </view>
+    <view class="_div data-v-51a5663d usermotto">
+      <view class="_p data-v-51a5663d skeletons-rect">Hello skeletons</view>
+    </view>
+    <skeletons is_capture_nodes="{{is_capture_nodes}}" is_complete="{{is_complete}}" loading="music" block_animation="shine" selector="skeletons" background="#fff" class="_skeletons data-v-51a5663d"></skeletons>
+  </view>
 </template>

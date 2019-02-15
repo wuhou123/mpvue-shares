@@ -4,10 +4,11 @@ import App from './index'
 const app = new Vue(App)
 app.$mount()
 
-export default{
+export default {
   config: {
-    // 注意，页面级可配置属性相当于只是`src/main.js`中配置里的`window`部分
-    "navigationBarTitleText": "",
-    "enablePullDownRefresh": true
+    "navigationBarTitleText": "首页",
+    "usingComponents": {
+      "skeletons": "/static/components/skeletons/index"
+    }
   }
 }

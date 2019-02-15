@@ -1,0 +1,30 @@
+
+.container.data-v-51a5663d {
+  width: 100vw;
+  height: 100vh;
+}
+.userinfo.data-v-51a5663d {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.userinfo-avatar.data-v-51a5663d {
+  width: 128rpx;
+  height: 128rpx;
+  margin: 20rpx;
+  border-radius: 50%;
+}
+.userinfo-nickname.data-v-51a5663d {
+  color: #aaa;
+}
+.author.data-v-51a5663d {
+  width: 200rpx;
+  height: 200rpx;
+  line-height: 200rpx;
+  border-radius: 100%;
+  background: #111;
+  margin: 30rpx auto;
+  font-size: 32rpx;
+  text-align: center;
+  color: #fff;
+}

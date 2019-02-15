@@ -15,11 +15,11 @@ var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a(__WEBPACK_IMPORTED_MOD
 app.$mount();
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    config: {
-        // 注意，页面级可配置属性相当于只是`src/main.js`中配置里的`window`部分
-        "navigationBarTitleText": "",
-        "enablePullDownRefresh": false
-    }
+  config: {
+    // 注意，页面级可配置属性相当于只是`src/main.js`中配置里的`window`部分
+    "navigationBarTitleText": "",
+    "enablePullDownRefresh": false
+  }
 });
 
 /***/ }),
