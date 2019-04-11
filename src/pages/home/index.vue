@@ -1,22 +1,60 @@
 <template>
   <div class="container skeletons">
-    <div class="author skeletons-circle">
-      Titan_star
-    </div>
-    <div class="skeletons-rect">
-      <p>
-        首屏渲染-小程序骨架屏动态注入组件
-      </p>
-    </div>
-    <div class="usermotto">
-      <p class="skeletons-rect">Hello skeletons</p>
-    </div>
+    <swiper class="card-swiper square-dot skeletons-rect"
+            indicator-dots="true"
+            circular="true"
+            autoplay="true"
+            interval="5000"
+            duration="500"
+            @change="cardSwiper"
+            indicator-color="#8799a3"
+            indicator-active-color="#0081ff">
+      <swiper-item v-for="(item,index) in imgList"
+                   :key="index"
+                   :class="cardCur==index?'cur':''">
+        <!-- <view class='bg-img shadow-blur'
+              :style="{'background-image':imgList[index]}"></view> -->
+        <img :src="item"
+             class='bg-img shadow-blur'
+             alt="">
+      </swiper-item>
+    </swiper>
     <skeletons :is_capture_nodes="is_capture_nodes"
                :is_complete="is_complete"
                loading="music"
                block_animation="shine"
                selector="skeletons"
                background="#fff" />
+    <div class="cu-timeline"
+         v-for="(item,index) in listData"
+         :key="index">
+      <div class="cu-time skeletons-rect">{{item.date}} {{item.week}}</div>
+      <div class="cu-item text-blue icon-noticefill skeletons-rect"
+           v-for="(sign,sindex) in item.events"
+           :key="sindex">
+        <div class="content">
+          <div class="cu-capsule radius">
+            <div class="cu-tag bg-cyan">事件</div>
+            <div class="cu-tag line-cyan">{{sign.event}}</div>
+          </div>
+          <div class='margin-top'>
+            <div class="cu-tag bg-red">影响板块</div>
+            <div class="cu-tag line-red">{{sign.concepts||'影响股较多'}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <section class="noData"
+             v-if="listData&&listData.length===0">
+      <div class="cu-timeline">
+        <div class="cu-time skeletons-rect">{{initTime}}</div>
+        <div class='cu-item text-red icon-attentionforbidfill skeletons-rect'>
+          <div class="content bg-red shadow-blur">
+            当前还未生成数据
+          </div>
+        </div>
+      </div>
+    </section>
   </div>
 </template>
 
@@ -24,12 +62,17 @@
 import Request from "@/api/allApi";
 import { SET_LOGIN, SET_CODE, SET_USERINFO } from "../../store/mutation-types";
 import { mapMutations } from "vuex";
+import { formatTime } from "@/utils/index"
 
 export default {
   data () {
     return {
       is_capture_nodes: false,
-      is_complete: false
+      is_complete: false,
+      listData: [],
+      cardCur: 0,
+      imgList: [],
+      initTime: ''
     }
   },
 
@@ -39,22 +82,62 @@ export default {
       setCode: "SET_CODE",
       setUserInfo: "SET_USERINFO"
     }),
-    getList () {
-      return new Promise((resolve, reject) => {
-        setTimeout(() => {
-          resolve('完成')
-        }, 5000)
+    getBanner () {
+      const db = wx.cloud.database()
+      const banner = db.collection('banner')
+      banner.get().then(res => {
+        console.log(res.data[0].list)
+        this.imgList = res.data[0].list || []
       })
     },
-    async init () {
-      let complete = await this.getList()
-      console.log(complete)
-      this.is_complete = true
+    getData () {
+      wx.cloud.callFunction({
+        name: 'reptile',
+        data: { type: 'getCalendar' }
+      }).then(res => {
+        this.is_capture_nodes = true
+        let list = res.result.home
+        if (list && list.includes('callback_dt')) list = JSON.parse(list.replace('callback_dt(', '').replace(');', ''))
+        console.log('getData', list)
+        this.listData = this.fileterData(list) || []
+        this.is_complete = true
+        //无数据时
+        console.log('this.listData', this.listData.length)
+        this.initTime = formatTime(new Date())
+      }).catch(error => {
+        this.is_complete = true
+        console.log(error)
+      })
+    },
+    fileterData (tmpJSON) {
+      let result = [];
+      if (tmpJSON.stat != "ok") return result;
+      for (let i = 0; i < tmpJSON.data.length; i++) {
+        let calendarInfo = { "date": "", "week": "", "events": [] };
+        calendarInfo.date = tmpJSON.data[i].date;
+        calendarInfo.week = tmpJSON.data[i].week;
+
+        for (let j = 0; j < tmpJSON.data[i].events.length; j++) {
+          let eventInfo = { "event": "", "concepts": "", "stocks": "", code: '' };
+
+          eventInfo.event = tmpJSON.data[i].events[j][0].length > 19 ? tmpJSON.data[i].events[j][0].substr(0, 18) + '...' : tmpJSON.data[i].events[j][0];
+          for (let k = 0; k < tmpJSON.data[i].concept[j].length; k++) { eventInfo.concepts += tmpJSON.data[i].concept[j][k].name + " "; eventInfo.code += tmpJSON.data[i].concept[j][k].code + " " }
+          for (let k = 0; k < tmpJSON.data[i].field[j].length; k++) { eventInfo.concepts += tmpJSON.data[i].field[j][k].name + " "; }  // concept和field合一
+          for (let k = 0; k < tmpJSON.data[i].stocks[j].length; k++) { eventInfo.stocks += tmpJSON.data[i].stocks[j][k].name + " "; }
+          calendarInfo.events.push(eventInfo);
+        }
+        result.push(calendarInfo);
+      }
+      console.log('filter', result)
+      return result;
+    },
+    cardSwiper (e) {
+      this.cardCur = e.mp.detail.current
     }
   },
   onLoad () {
-    this.is_capture_nodes = true
-    this.init()
+    this.getData()
+    this.getBanner()
   },
   onShow () { },
 
@@ -97,5 +180,15 @@ export default {
   font-size: 32rpx;
   text-align: center;
   color: #fff;
+}
+.cu-timeline .cu-time {
+  width: 300rpx;
+}
+.container .card-swiper swiper-item {
+  padding: 10rpx 0rpx 0rpx;
+}
+.noData {
+  height: calc(100vh - 420rpx);
+  background: #fff;
 }
 </style>

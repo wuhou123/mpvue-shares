@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import App from './App'
 import store from './store/index'
+import '../static/css/icon.css'
+import '../static/css/colorui.css'
 
 Vue.prototype.$store = store
 
@@ -13,7 +15,7 @@ app.$mount()
 export default {
   // 这个字段走 app.json
   config: {
-    pages: ['^pages/home/main', 'pages/details/main', 'pages/counter/main'],
+    pages: ['^pages/home/main', 'pages/details/main', 'pages/market/main'],
     window: {
       navigationBarBackgroundColor: '#F73240',
       navigationBarTextStyle: 'white',
@@ -22,6 +24,7 @@ export default {
       backgroundTextStyle: 'dark',
       enablePullDownRefresh: false
     },
+    cloud: true,
     tabBar: {
       color: '#666666',
       selectedColor: '#D62B2B',
@@ -29,8 +32,14 @@ export default {
       backgroundColor: '#fff',
       list: [
         {
-          text: '发现啦',
+          text: '股市日历',
           pagePath: 'pages/home/main',
+          iconPath: 'static/icon/weding.png',
+          selectedIconPath: 'static/icon/weding_focus.png'
+        },
+        {
+          text: '行情',
+          pagePath: 'pages/market/main',
           iconPath: 'static/icon/weding.png',
           selectedIconPath: 'static/icon/weding_focus.png'
         },

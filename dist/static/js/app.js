@@ -1,14 +1,20 @@
 global.webpackJsonp([2],{
 
-/***/ 49:
+/***/ 50:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__App__ = __webpack_require__(51);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__store_index__ = __webpack_require__(55);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__App__ = __webpack_require__(52);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__store_index__ = __webpack_require__(56);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__static_css_icon_css__ = __webpack_require__(67);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__static_css_icon_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__static_css_icon_css__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__static_css_colorui_css__ = __webpack_require__(68);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__static_css_colorui_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__static_css_colorui_css__);
+
+
 
 
 
@@ -24,7 +30,7 @@ app.$mount();
 /* harmony default export */ __webpack_exports__["default"] = ({
   // 这个字段走 app.json
   config: {
-    pages: ['^pages/home/main', 'pages/details/main', 'pages/counter/main'],
+    pages: ['^pages/home/main', 'pages/details/main', 'pages/market/main'],
     window: {
       navigationBarBackgroundColor: '#F73240',
       navigationBarTextStyle: 'white',
@@ -33,14 +39,20 @@ app.$mount();
       backgroundTextStyle: 'dark',
       enablePullDownRefresh: false
     },
+    cloud: true,
     tabBar: {
       color: '#666666',
       selectedColor: '#D62B2B',
       borderStyle: 'white',
       backgroundColor: '#fff',
       list: [{
-        text: '发现啦',
+        text: '股市日历',
         pagePath: 'pages/home/main',
+        iconPath: 'static/icon/weding.png',
+        selectedIconPath: 'static/icon/weding_focus.png'
+      }, {
+        text: '行情',
+        pagePath: 'pages/market/main',
         iconPath: 'static/icon/weding.png',
         selectedIconPath: 'static/icon/weding_focus.png'
       }, {
@@ -55,15 +67,15 @@ app.$mount();
 
 /***/ }),
 
-/***/ 51:
+/***/ 52:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_mpvue_loader_lib_selector_type_script_index_0_App_vue__ = __webpack_require__(54);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_mpvue_loader_lib_selector_type_script_index_0_App_vue__ = __webpack_require__(55);
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(52)
+  __webpack_require__(53)
 }
 var normalizeComponent = __webpack_require__(0)
 /* script */
@@ -107,14 +119,14 @@ if (false) {(function () {
 
 /***/ }),
 
-/***/ 52:
+/***/ 53:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
 
-/***/ 54:
+/***/ 55:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -127,21 +139,28 @@ if (false) {(function () {
     wx.setStorageSync('logs', logs);
 
     console.log('app created and cache logs by setStorageSync');
+    if (!wx.cloud) {
+      console.error('请使用 2.2.3 或以上的基础库以使用云能力');
+    } else {
+      wx.cloud.init({
+        traceUser: true
+      });
+    }
   }
 });
 
 /***/ }),
 
-/***/ 55:
+/***/ 56:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__state__ = __webpack_require__(56);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__mutations__ = __webpack_require__(57);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vuex_persistedstate__ = __webpack_require__(63);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__state__ = __webpack_require__(57);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__mutations__ = __webpack_require__(58);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vuex_persistedstate__ = __webpack_require__(64);
 
 
 
@@ -168,7 +187,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
 
 /***/ }),
 
-/***/ 56:
+/***/ 57:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -182,11 +201,11 @@ var state = {
 
 /***/ }),
 
-/***/ 57:
+/***/ 58:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_defineProperty__ = __webpack_require__(58);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_defineProperty__ = __webpack_require__(59);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_defineProperty___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_defineProperty__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mutation_types__ = __webpack_require__(22);
 
@@ -212,7 +231,21 @@ var matations = (_matations = {}, __WEBPACK_IMPORTED_MODULE_0_babel_runtime_help
 
 /* harmony default export */ __webpack_exports__["a"] = (matations);
 
+/***/ }),
+
+/***/ 67:
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
+/***/ 68:
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
 /***/ })
 
-},[49]);
+},[50]);
 //# sourceMappingURL=app.js.map

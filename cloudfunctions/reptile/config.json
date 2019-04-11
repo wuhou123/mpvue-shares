@@ -1,0 +1,9 @@
+{
+  "triggers": [
+    {
+      "name": "reptitle",
+      "type": "timer",
+      "config": "0 55 23 * * * *"
+    }
+  ]
+}

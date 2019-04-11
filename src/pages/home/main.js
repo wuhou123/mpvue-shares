@@ -6,9 +6,9 @@ app.$mount()
 
 export default {
   config: {
-    "navigationBarTitleText": "首页",
-    "usingComponents": {
-      "skeletons": "/static/components/skeletons/index"
+    navigationBarTitleText: '股市日历',
+    usingComponents: {
+      skeletons: '/static/components/component/skeletons/index'
     }
   }
 }

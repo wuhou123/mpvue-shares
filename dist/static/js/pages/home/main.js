@@ -1,13 +1,13 @@
-global.webpackJsonp([4],{
+global.webpackJsonp([5],{
 
-/***/ 174:
+/***/ 172:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__index__ = __webpack_require__(175);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__index__ = __webpack_require__(173);
 
 
 
@@ -16,25 +16,25 @@ app.$mount();
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   config: {
-    "navigationBarTitleText": "首页",
-    "usingComponents": {
-      "skeletons": "/static/components/skeletons/index"
+    navigationBarTitleText: '股市日历',
+    usingComponents: {
+      skeletons: '/static/components/component/skeletons/index'
     }
   }
 });
 
 /***/ }),
 
-/***/ 175:
+/***/ 173:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_mpvue_loader_lib_selector_type_script_index_0_index_vue__ = __webpack_require__(177);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_mpvue_loader_lib_template_compiler_index_id_data_v_51a5663d_hasScoped_true_transformToRequire_video_src_source_src_img_src_image_xlink_href_node_modules_mpvue_loader_lib_selector_type_template_index_0_index_vue__ = __webpack_require__(188);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_mpvue_loader_lib_selector_type_script_index_0_index_vue__ = __webpack_require__(175);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_mpvue_loader_lib_template_compiler_index_id_data_v_51a5663d_hasScoped_true_transformToRequire_video_src_source_src_img_src_image_xlink_href_node_modules_mpvue_loader_lib_selector_type_template_index_0_index_vue__ = __webpack_require__(185);
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(176)
+  __webpack_require__(174)
 }
 var normalizeComponent = __webpack_require__(0)
 /* script */
@@ -79,54 +79,91 @@ if (false) {(function () {
 
 /***/ }),
 
-/***/ 176:
+/***/ 174:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
 
-/***/ 177:
+/***/ 175:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(178);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(176);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_asyncToGenerator__ = __webpack_require__(181);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_asyncToGenerator__ = __webpack_require__(179);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_asyncToGenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_asyncToGenerator__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_core_js_promise__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_core_js_promise___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_babel_runtime_core_js_promise__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_extends__ = __webpack_require__(48);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_extends__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__api_allApi__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__store_mutation_types__ = __webpack_require__(22);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_vuex__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_extends__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_extends__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__api_allApi__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__store_mutation_types__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_vuex__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils_index__ = __webpack_require__(76);
 
 
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -136,68 +173,101 @@ if (false) {(function () {
   data: function data() {
     return {
       is_capture_nodes: false,
-      is_complete: false
+      is_complete: false,
+      listData: [],
+      cardCur: 0,
+      imgList: [],
+      initTime: ''
     };
   },
 
 
-  methods: __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_6_vuex__["b" /* mapMutations */])({
+  methods: __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_extends___default()({}, Object(__WEBPACK_IMPORTED_MODULE_5_vuex__["b" /* mapMutations */])({
     setLogin: "SET_LOGIN",
     setCode: "SET_CODE",
     setUserInfo: "SET_USERINFO"
   }), {
-    getList: function getList() {
-      return new __WEBPACK_IMPORTED_MODULE_2_babel_runtime_core_js_promise___default.a(function (resolve, reject) {
-        setTimeout(function () {
-          resolve('完成');
-        }, 5000);
-      });
-    },
-    init: function init() {
+    getBanner: function getBanner() {
       var _this = this;
 
-      return __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_asyncToGenerator___default()( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
-        var complete;
-        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                _context.next = 2;
-                return _this.getList();
+      var db = wx.cloud.database();
+      var banner = db.collection('banner');
+      banner.get().then(function (res) {
+        console.log(res.data[0].list);
+        _this.imgList = res.data[0].list || [];
+      });
+    },
+    getData: function getData() {
+      var _this2 = this;
 
-              case 2:
-                complete = _context.sent;
+      wx.cloud.callFunction({
+        name: 'reptile',
+        data: { type: 'getCalendar' }
+      }).then(function (res) {
+        _this2.is_capture_nodes = true;
+        var list = res.result.home;
+        if (list && list.includes('callback_dt')) list = JSON.parse(list.replace('callback_dt(', '').replace(');', ''));
+        console.log('getData', list);
+        _this2.listData = _this2.fileterData(list) || [];
+        _this2.is_complete = true;
+        //无数据时
+        console.log('this.listData', _this2.listData.length);
+        _this2.initTime = Object(__WEBPACK_IMPORTED_MODULE_6__utils_index__["b" /* formatTime */])(new Date());
+      }).catch(function (error) {
+        _this2.is_complete = true;
+        console.log(error);
+      });
+    },
+    fileterData: function fileterData(tmpJSON) {
+      var result = [];
+      if (tmpJSON.stat != "ok") return result;
+      for (var i = 0; i < tmpJSON.data.length; i++) {
+        var calendarInfo = { "date": "", "week": "", "events": [] };
+        calendarInfo.date = tmpJSON.data[i].date;
+        calendarInfo.week = tmpJSON.data[i].week;
 
-                console.log(complete);
-                _this.is_complete = true;
+        for (var j = 0; j < tmpJSON.data[i].events.length; j++) {
+          var eventInfo = { "event": "", "concepts": "", "stocks": "", code: '' };
 
-              case 5:
-              case "end":
-                return _context.stop();
-            }
+          eventInfo.event = tmpJSON.data[i].events[j][0].length > 19 ? tmpJSON.data[i].events[j][0].substr(0, 18) + '...' : tmpJSON.data[i].events[j][0];
+          for (var k = 0; k < tmpJSON.data[i].concept[j].length; k++) {
+            eventInfo.concepts += tmpJSON.data[i].concept[j][k].name + " ";eventInfo.code += tmpJSON.data[i].concept[j][k].code + " ";
           }
-        }, _callee, _this);
-      }))();
+          for (var _k = 0; _k < tmpJSON.data[i].field[j].length; _k++) {
+            eventInfo.concepts += tmpJSON.data[i].field[j][_k].name + " ";
+          } // concept和field合一
+          for (var _k2 = 0; _k2 < tmpJSON.data[i].stocks[j].length; _k2++) {
+            eventInfo.stocks += tmpJSON.data[i].stocks[j][_k2].name + " ";
+          }
+          calendarInfo.events.push(eventInfo);
+        }
+        result.push(calendarInfo);
+      }
+      console.log('filter', result);
+      return result;
+    },
+    cardSwiper: function cardSwiper(e) {
+      this.cardCur = e.mp.detail.current;
     }
   }),
   onLoad: function onLoad() {
-    this.is_capture_nodes = true;
-    this.init();
+    this.getData();
+    this.getBanner();
   },
   onShow: function onShow() {},
   onPullDownRefresh: function onPullDownRefresh() {
-    var _this2 = this;
+    var _this3 = this;
 
-    return __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_asyncToGenerator___default()( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee2() {
-      return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee2$(_context2) {
+    return __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_asyncToGenerator___default()( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
+      return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
         while (1) {
-          switch (_context2.prev = _context2.next) {
+          switch (_context.prev = _context.next) {
             case 0:
             case "end":
-              return _context2.stop();
+              return _context.stop();
           }
         }
-      }, _callee2, _this2);
+      }, _callee, _this3);
     }))();
   },
 
@@ -208,22 +278,43 @@ if (false) {(function () {
 
 /***/ }),
 
-/***/ 188:
+/***/ 185:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "container skeletons"
-  }, [_c('div', {
-    staticClass: "author skeletons-circle"
-  }, [_vm._v("\n    Titan_star\n  ")]), _vm._v(" "), _c('div', {
-    staticClass: "skeletons-rect"
-  }, [_c('p', [_vm._v("\n      首屏渲染-小程序骨架屏动态注入组件\n    ")])], 1), _vm._v(" "), _c('div', {
-    staticClass: "usermotto"
-  }, [_c('p', {
-    staticClass: "skeletons-rect"
-  }, [_vm._v("Hello skeletons")])], 1), _vm._v(" "), _c('skeletons', {
+  }, [_c('swiper', {
+    staticClass: "card-swiper square-dot skeletons-rect",
+    attrs: {
+      "indicator-dots": "true",
+      "circular": "true",
+      "autoplay": "true",
+      "interval": "5000",
+      "duration": "500",
+      "indicator-color": "#8799a3",
+      "indicator-active-color": "#0081ff",
+      "eventid": '0'
+    },
+    on: {
+      "change": _vm.cardSwiper
+    }
+  }, _vm._l((_vm.imgList), function(item, index) {
+    return _c('swiper-item', {
+      key: index,
+      class: _vm.cardCur == index ? 'cur' : '',
+      attrs: {
+        "mpcomid": '0-' + index
+      }
+    }, [_c('img', {
+      staticClass: "bg-img shadow-blur",
+      attrs: {
+        "src": item,
+        "alt": ""
+      }
+    })])
+  })), _vm._v(" "), _c('skeletons', {
     attrs: {
       "is_capture_nodes": _vm.is_capture_nodes,
       "is_complete": _vm.is_complete,
@@ -231,9 +322,45 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       "block_animation": "shine",
       "selector": "skeletons",
       "background": "#fff",
-      "mpcomid": '0'
+      "mpcomid": '1'
     }
-  })], 1)
+  }), _vm._v(" "), _vm._l((_vm.listData), function(item, index) {
+    return _c('div', {
+      key: index,
+      staticClass: "cu-timeline"
+    }, [_c('div', {
+      staticClass: "cu-time skeletons-rect"
+    }, [_vm._v(_vm._s(item.date) + " " + _vm._s(item.week))]), _vm._v(" "), _vm._l((item.events), function(sign, sindex) {
+      return _c('div', {
+        key: sindex,
+        staticClass: "cu-item text-blue icon-noticefill skeletons-rect"
+      }, [_c('div', {
+        staticClass: "content"
+      }, [_c('div', {
+        staticClass: "cu-capsule radius"
+      }, [_c('div', {
+        staticClass: "cu-tag bg-cyan"
+      }, [_vm._v("事件")]), _vm._v(" "), _c('div', {
+        staticClass: "cu-tag line-cyan"
+      }, [_vm._v(_vm._s(sign.event))])]), _vm._v(" "), _c('div', {
+        staticClass: "margin-top"
+      }, [_c('div', {
+        staticClass: "cu-tag bg-red"
+      }, [_vm._v("影响板块")]), _vm._v(" "), _c('div', {
+        staticClass: "cu-tag line-red"
+      }, [_vm._v(_vm._s(sign.concepts || '影响股较多'))])])])])
+    })], 2)
+  }), _vm._v(" "), (_vm.listData && _vm.listData.length === 0) ? _c('section', {
+    staticClass: "noData"
+  }, [_c('div', {
+    staticClass: "cu-timeline"
+  }, [_c('div', {
+    staticClass: "cu-time skeletons-rect"
+  }, [_vm._v(_vm._s(_vm.initTime))]), _vm._v(" "), _c('div', {
+    staticClass: "cu-item text-red icon-attentionforbidfill skeletons-rect"
+  }, [_c('div', {
+    staticClass: "content bg-red shadow-blur"
+  }, [_vm._v("\n          当前还未生成数据\n        ")])])])]) : _vm._e()], 2)
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -248,5 +375,5 @@ if (false) {
 
 /***/ })
 
-},[174]);
+},[172]);
 //# sourceMappingURL=main.js.map

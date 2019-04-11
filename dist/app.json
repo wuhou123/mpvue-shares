@@ -1,8 +1,8 @@
 {
   "pages": [
     "pages/home/main",
-    "pages/counter/main",
     "pages/details/main",
+    "pages/market/main",
     "pages/my/main"
   ],
   "window": {
@@ -13,6 +13,7 @@
     "backgroundTextStyle": "dark",
     "enablePullDownRefresh": false
   },
+  "cloud": true,
   "tabBar": {
     "color": "#666666",
     "selectedColor": "#D62B2B",
@@ -20,8 +21,14 @@
     "backgroundColor": "#fff",
     "list": [
       {
-        "text": "发现啦",
+        "text": "股市日历",
         "pagePath": "pages/home/main",
+        "iconPath": "static/icon/weding.png",
+        "selectedIconPath": "static/icon/weding_focus.png"
+      },
+      {
+        "text": "行情",
+        "pagePath": "pages/market/main",
         "iconPath": "static/icon/weding.png",
         "selectedIconPath": "static/icon/weding_focus.png"
       },

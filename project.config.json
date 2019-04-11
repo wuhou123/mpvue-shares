@@ -9,8 +9,9 @@
   },
   "miniprogramRoot": "dist/",
   "compileType": "miniprogram",
-  "appid": "wx6a57dd1d31a11c21",
+  "appid": "wx64b1735b4eb0b71d",
   "projectname": "wx-shares",
+  "cloudfunctionRoot": "cloudfunctions/",
   "condition": {
     "search": {
       "current": -1,

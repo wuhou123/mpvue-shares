@@ -1,6 +1,6 @@
 {
-  "navigationBarTitleText": "首页",
+  "navigationBarTitleText": "股市日历",
   "usingComponents": {
-    "skeletons": "/static/components/skeletons/index"
+    "skeletons": "/static/components/component/skeletons/index"
   }
 }
