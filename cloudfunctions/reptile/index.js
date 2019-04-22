@@ -27,6 +27,12 @@ exports.main = async (event, context) => {
     case 'getRankReal':
       res = await reptile.getRankReal(event)
       break
+    case 'getNews':
+      res = await reptile.getNews(event)
+      break
+    case 'getDetail':
+      res = await reptile.getDetail(event)
+      break
   }
   return {
     home: res

@@ -1,3 +1,13 @@
 <template name="index$cb5b14ee">
-  <view class="_div data-v-445c520c"></view>
+  <view class="_div data-v-445c520c bg-white padding-lr">
+    <view class="_view data-v-445c520c solid-bottom text-xl padding skeletons-rect">
+      <text class="_text data-v-445c520c text-black text-bold">{{textList.title}}</text>
+    </view>
+    <view class="_view data-v-445c520c solid-bottom text-lg padding bg-grey radius skeletons-rect" hidden="{{!(textList.content_short)}}">
+      <text class="_text data-v-445c520c">
+        <text class="_text data-v-445c520c text-orange text-bold">摘要 ：</text>{{textList.content_short}}</text>
+    </view>
+    <rich-text class="_view data-v-445c520c solid-bottom text-lg padding skeletons-rect" nodes="{{textList.content}}"></rich-text>
+    <skeletons is_capture_nodes="{{is_capture_nodes}}" is_complete="{{is_complete}}" loading="music" block_animation="shine" selector="skeletons" background="#fff" class="_skeletons data-v-445c520c"></skeletons>
+  </view>
 </template>

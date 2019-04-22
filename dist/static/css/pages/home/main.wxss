@@ -1,7 +1,7 @@
 
 .container.data-v-51a5663d {
   width: 100vw;
-  height: 100vh;
+  height: 100%;
 }
 .userinfo.data-v-51a5663d {
   display: flex;
@@ -37,4 +37,13 @@
 .noData.data-v-51a5663d {
   height: calc(100vh - 420rpx);
   background: #fff;
+}
+.css-sticky.data-v-51a5663d {
+  position: sticky;
+  top: 0;
+  background: #fff;
+  z-index: 999;
+}
+.border-top.data-v-51a5663d {
+  border-top: 2rpx solid #e8e8e8;
 }

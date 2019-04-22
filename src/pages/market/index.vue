@@ -94,7 +94,7 @@
             <view>{{item.fNow}}</view>
             <view class="action c-width"
                   :class="listIndex=='upList'?'c-red':listIndex=='downList'?'c-green':''">
-              +{{item.fFhsl}}%
+              {{isAdd[listIndex]}} {{item.fFhsl}}%
             </view>
           </view>
         </view>
@@ -193,6 +193,11 @@ export default {
         'upList': '涨幅榜',
         'downList': '跌幅榜',
         'changeList': '换手率榜'
+      },
+      isAdd: {
+        'upList': '+',
+        'downList': "-",
+        'changeList': ''
       }
     }
   },

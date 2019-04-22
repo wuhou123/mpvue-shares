@@ -1,13 +1,13 @@
 global.webpackJsonp([5],{
 
-/***/ 172:
+/***/ 174:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__index__ = __webpack_require__(173);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__index__ = __webpack_require__(175);
 
 
 
@@ -25,16 +25,16 @@ app.$mount();
 
 /***/ }),
 
-/***/ 173:
+/***/ 175:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_mpvue_loader_lib_selector_type_script_index_0_index_vue__ = __webpack_require__(175);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_mpvue_loader_lib_selector_type_script_index_0_index_vue__ = __webpack_require__(177);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_mpvue_loader_lib_template_compiler_index_id_data_v_51a5663d_hasScoped_true_transformToRequire_video_src_source_src_img_src_image_xlink_href_node_modules_mpvue_loader_lib_selector_type_template_index_0_index_vue__ = __webpack_require__(185);
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(174)
+  __webpack_require__(176)
 }
 var normalizeComponent = __webpack_require__(0)
 /* script */
@@ -79,30 +79,71 @@ if (false) {(function () {
 
 /***/ }),
 
-/***/ 174:
+/***/ 176:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
 
-/***/ 175:
+/***/ 177:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(176);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(50);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_asyncToGenerator__ = __webpack_require__(179);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_asyncToGenerator__ = __webpack_require__(51);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_asyncToGenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_asyncToGenerator__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_extends__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_extends__ = __webpack_require__(32);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_extends__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__api_allApi__ = __webpack_require__(23);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__store_mutation_types__ = __webpack_require__(22);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_vuex__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils_index__ = __webpack_require__(76);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils_index__ = __webpack_require__(24);
 
 
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -177,7 +218,11 @@ if (false) {(function () {
       listData: [],
       cardCur: 0,
       imgList: [],
-      initTime: ''
+      initTime: '',
+      tabList: ['推荐', '精选', '日历'],
+      TabCur: 0,
+      scrollLeft: 0,
+      newsList: []
     };
   },
 
@@ -248,15 +293,49 @@ if (false) {(function () {
     },
     cardSwiper: function cardSwiper(e) {
       this.cardCur = e.mp.detail.current;
+    },
+    tabSelect: function tabSelect(e) {
+      this.TabCur = e.currentTarget.dataset.id;
+      this.scrollLeft = (e.currentTarget.dataset.id - 1) * 60;
+      if (this.TabCur == 2) this.getData();else this.getNews();
+    },
+    getNews: function getNews() {
+      var _this3 = this;
+
+      if (this.newsList[this.TabCur]) return;
+      this.is_capture_nodes = false;
+      this.is_complete = false;
+      var types = ['wscn-free', 'most-read'];
+      wx.cloud.callFunction({
+        name: 'reptile',
+        data: { type: 'getNews', limit: 20, cursor: '', channel: types[this.TabCur], accept: 'article,newsroom,morning-report,newsrooms,live,calendar,audition,wits-home-users,hot-themes,vote-interactive,discuss-interactive,ad.internal_banner.inhouse,ad.internal_inline.inhouse,ad.inline.inhouse,ad.video.inhouse,ad.banner.inhouse,ad.inline.plista,ad.banner.plista,ad.topic.inhouse,ad.inline.tanx' }
+      }).then(function (res) {
+        _this3.is_capture_nodes = true;
+        var data = res.result.home.data.items || [];
+        // data.forEach(v => {
+        //   let date = parseInt(v.resource.display_time)
+        //   v = formatTime(new Date(date))        })
+        _this3.newsList[_this3.TabCur] = data;
+        _this3.is_complete = true;
+        console.log('ressss', res);
+      }).catch(function (error) {
+        _this3.is_complete = true;
+        console.log(error);
+      });
+    },
+    goDetail: function goDetail(item) {
+      console.log(item.resource.id);
+      var url = "../details/main?id=" + item.resource.id;
+      wx.navigateTo({ url: url });
     }
   }),
   onLoad: function onLoad() {
-    this.getData();
     this.getBanner();
+    this.getNews();
   },
   onShow: function onShow() {},
   onPullDownRefresh: function onPullDownRefresh() {
-    var _this3 = this;
+    var _this4 = this;
 
     return __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_asyncToGenerator___default()( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
       return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
@@ -267,7 +346,7 @@ if (false) {(function () {
               return _context.stop();
           }
         }
-      }, _callee, _this3);
+      }, _callee, _this4);
     }))();
   },
 
@@ -314,17 +393,57 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         "alt": ""
       }
     })])
-  })), _vm._v(" "), _c('skeletons', {
+  })), _vm._v(" "), _c('scroll-view', {
+    staticClass: "bg-white nav css-sticky",
     attrs: {
-      "is_capture_nodes": _vm.is_capture_nodes,
-      "is_complete": _vm.is_complete,
-      "loading": "music",
-      "block_animation": "shine",
-      "selector": "skeletons",
-      "background": "#fff",
-      "mpcomid": '1'
+      "scroll-x": ""
     }
-  }), _vm._v(" "), _vm._l((_vm.listData), function(item, index) {
+  }, [_c('view', {
+    staticClass: "flex text-center skeletons-rect"
+  }, _vm._l((_vm.tabList), function(item, index) {
+    return _c('view', {
+      key: index,
+      staticClass: "cu-item flex-sub",
+      class: index == _vm.TabCur ? 'text-orange cur' : '',
+      attrs: {
+        "data-id": index,
+        "eventid": '1-' + index
+      },
+      on: {
+        "tap": _vm.tabSelect
+      }
+    }, [_vm._v("\n        " + _vm._s(item) + "\n      ")])
+  }))]), _vm._v(" "), (_vm.TabCur === 0 || _vm.TabCur === 1) ? _c('section', _vm._l((_vm.newsList[_vm.TabCur]), function(item, index) {
+    return _c('view', {
+      key: index,
+      staticClass: "cu-card article no-card border-top",
+      attrs: {
+        "eventid": '2-' + index
+      },
+      on: {
+        "click": function($event) {
+          _vm.goDetail(item)
+        }
+      }
+    }, [_c('view', {
+      staticClass: "cu-item shadow"
+    }, [_c('view', {
+      staticClass: "title"
+    }, [_c('view', {
+      staticClass: "text-cut"
+    }, [_vm._v(_vm._s(item.resource.title))])]), _vm._v(" "), _c('view', {
+      staticClass: "content"
+    }, [_c('image', {
+      attrs: {
+        "src": item.resource.image_uri,
+        "mode": "aspectFill"
+      }
+    }), _vm._v(" "), _c('view', {
+      staticClass: "desc"
+    }, [_c('view', {
+      staticClass: "text-content"
+    }, [_vm._v(_vm._s(item.resource.content_short))]), _vm._v(" "), _c('view')])])])])
+  })) : _vm._e(), _vm._v(" "), (_vm.TabCur === 2) ? _c('section', [_vm._l((_vm.listData), function(item, index) {
     return _c('div', {
       key: index,
       staticClass: "cu-timeline"
@@ -360,7 +479,17 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     staticClass: "cu-item text-red icon-attentionforbidfill skeletons-rect"
   }, [_c('div', {
     staticClass: "content bg-red shadow-blur"
-  }, [_vm._v("\n          当前还未生成数据\n        ")])])])]) : _vm._e()], 2)
+  }, [_vm._v("\n            当前正在生成数据中...\n          ")])])])]) : _vm._e()], 2) : _vm._e(), _vm._v(" "), _c('skeletons', {
+    attrs: {
+      "is_capture_nodes": _vm.is_capture_nodes,
+      "is_complete": _vm.is_complete,
+      "loading": "music",
+      "block_animation": "shine",
+      "selector": "skeletons",
+      "background": "#fff",
+      "mpcomid": '1'
+    }
+  })], 1)
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -375,5 +504,5 @@ if (false) {
 
 /***/ })
 
-},[172]);
+},[174]);
 //# sourceMappingURL=main.js.map

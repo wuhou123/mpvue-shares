@@ -11,7 +11,9 @@ const URL = {
     'http://qd.10jqka.com.cn/quote.php?cate=real&type=stock&return=json&callback=showStockData&callback=jQuery183031558640597485343_1554345337454',
   jetton: 'http://doctor.10jqka.com.cn/',
   rankList: 'https://sec.wedengta.com/getSecInfo',
-  rankReal: 'https://sec.wedengta.com/getMarketQuotation'
+  rankReal: 'https://sec.wedengta.com/getMarketQuotation',
+  news: 'https://api.wallstreetcn.com/apiv1/content/fabricate-articles',
+  newsDetail: 'https://api.wallstreetcn.com/apiv1/content/articles/'
 }
 
 module.exports = {
@@ -145,6 +147,50 @@ module.exports = {
         .catch(error => {
           console.log(error)
           reject('获取详情失败！')
+        })
+    })
+  },
+  getNews(item) {
+    let options = {
+      method: 'GET',
+      url: URL.news,
+      qs: item,
+      json: true,
+      allow_redirects: false,
+      headers: {
+        'content-type': 'application/json'
+      }
+    }
+    return new Promise((resolve, reject) => {
+      request(options)
+        .then(res => {
+          resolve(res)
+        })
+        .catch(error => {
+          console.log(error)
+          reject('获取新闻失败！')
+        })
+    })
+  },
+  getDetail(item) {
+    let options = {
+      method: 'GET',
+      url: URL.newsDetail + item.id,
+      qs: item,
+      json: true,
+      allow_redirects: false,
+      headers: {
+        'content-type': 'application/json'
+      }
+    }
+    return new Promise((resolve, reject) => {
+      request(options)
+        .then(res => {
+          resolve(res)
+        })
+        .catch(error => {
+          console.log(error)
+          reject('获取新闻详情失败！')
         })
     })
   }

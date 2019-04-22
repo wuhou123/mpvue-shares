@@ -84,7 +84,6 @@ export const regular = function(str) {
     .replace(/&nbsp;/gim, ' ')
     .trim()
 }
-
 export default {
   formatNumber,
   formatTime
