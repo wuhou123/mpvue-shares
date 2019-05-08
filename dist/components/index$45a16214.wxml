@@ -1,54 +1,29 @@
 <template name="index$45a16214">
   <view class="_div data-v-51a5663d container skeletons">
-    <swiper class="_swiper data-v-51a5663d card-swiper square-dot skeletons-rect" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500" bindchange="handleProxy" indicator-color="#8799a3" indicator-active-color="#0081ff" data-eventid="{{'0'}}"
-      data-comkey="{{$k}}">
+    <swiper class="_swiper data-v-51a5663d card-swiper square-dot skeletons-rect" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500" bindchange="handleProxy" indicator-color="#8799a3" indicator-active-color="#0081ff" hidden="{{!(is_complete)}}"
+      data-eventid="{{'0'}}" data-comkey="{{$k}}">
       <swiper-item wx:key="index" key="{{index}}" wx:for="{{imgList}}" wx:for-index="index" wx:for-item="item" class="_swiper-item data-v-51a5663d {{cardCur == index ? 'cur' : ''}}">
         <image src="{{item}}" class="_img data-v-51a5663d bg-img shadow-blur" alt></image>
       </swiper-item>
     </swiper>
-    <scroll-view scroll-x class="_scroll-view data-v-51a5663d bg-white nav css-sticky">
-      <view class="_view data-v-51a5663d flex text-center skeletons-rect">
-        <view class="_view data-v-51a5663d cu-item flex-sub {{index == TabCur ? 'text-orange cur' : ''}}" wx:key="index" key="{{index}}" bindtap="handleProxy" data-id="{{index}}" data-eventid="{{'1-'+index}}" data-comkey="{{$k}}" wx:for="{{tabList}}" wx:for-index="index"
+    <scroll-view scroll-x class="_scroll-view data-v-51a5663d bg-white nav css-sticky" hidden="{{!(is_complete)}}">
+      <view class="_div data-v-51a5663d flex text-center skeletons-rect">
+        <view class="_div data-v-51a5663d cu-item flex-sub {{index == TabCur ? 'text-orange cur' : ''}}" wx:key="index" key="{{index}}" bindtap="handleProxy" data-id="{{index}}" data-eventid="{{'1-'+index}}" data-comkey="{{$k}}" wx:for="{{tabList}}" wx:for-index="index"
           wx:for-item="item"> {{item}} </view>
       </view>
     </scroll-view>
-    <view wx:if="{{TabCur===0||TabCur===1}}" class="_section data-v-51a5663d">
-      <view class="_view data-v-51a5663d cu-card article no-card border-top" wx:key="index" key="{{index}}" bindtap="handleProxy" data-eventid="{{'2-'+index}}" data-comkey="{{$k}}" wx:for="{{newsList[TabCur]}}" wx:for-index="index" wx:for-item="item">
-        <view class="_view data-v-51a5663d cu-item shadow">
-          <view class="_view data-v-51a5663d title">
-            <view class="_view data-v-51a5663d text-cut">{{item.resource.title}}</view>
+    <view class="_section data-v-51a5663d">
+      <view class="_div data-v-51a5663d cu-card article no-card border-top" wx:key="index" key="{{index}}" bindtap="handleProxy" data-eventid="{{'2-'+index}}" data-comkey="{{$k}}" wx:for="{{newsList}}" wx:for-index="index" wx:for-item="item">
+        <view class="_div data-v-51a5663d cu-item shadow">
+          <view class="_div data-v-51a5663d title">
+            <view class="_div data-v-51a5663d text-cut">{{item.resource.title}}</view>
           </view>
-          <view class="_view data-v-51a5663d content">
-            <image src="{{item.resource.image_uri}}" mode="aspectFill" class="_image data-v-51a5663d"></image>
-            <view class="_view data-v-51a5663d desc">
-              <view class="_view data-v-51a5663d text-content">{{item.resource.content_short}}</view>
-              <view class="_view data-v-51a5663d"></view>
-            </view>
-          </view>
-        </view>
-      </view>
-    </view>
-    <view wx:if="{{TabCur===2}}" class="_section data-v-51a5663d">
-      <view class="_div data-v-51a5663d cu-timeline" wx:key="index" key="{{index}}" wx:for="{{listData}}" wx:for-index="index" wx:for-item="item">
-        <view class="_div data-v-51a5663d cu-time skeletons-rect">{{item.date}} {{item.week}}</view>
-        <view class="_div data-v-51a5663d cu-item text-blue icon-noticefill skeletons-rect" wx:key="sindex" key="{{sindex}}" wx:for="{{item.events}}" wx:for-index="sindex" wx:for-item="sign">
           <view class="_div data-v-51a5663d content">
-            <view class="_div data-v-51a5663d cu-capsule radius">
-              <view class="_div data-v-51a5663d cu-tag bg-cyan">事件</view>
-              <view class="_div data-v-51a5663d cu-tag line-cyan">{{sign.event}}</view>
+            <image src="{{item.resource.image_uri}}" mode="aspectFill" class="_image data-v-51a5663d"></image>
+            <view class="_div data-v-51a5663d desc">
+              <view class="_div data-v-51a5663d text-content">{{item.resource.content_short}}</view>
+              <view class="_div data-v-51a5663d"></view>
             </view>
-            <view class="_div data-v-51a5663d margin-top">
-              <view class="_div data-v-51a5663d cu-tag bg-red">影响板块</view>
-              <view class="_div data-v-51a5663d cu-tag line-red">{{sign.concepts||'影响股较多'}}</view>
-            </view>
-          </view>
-        </view>
-      </view>
-      <view class="_section data-v-51a5663d noData" wx:if="{{listData&&listData.length===0}}">
-        <view class="_div data-v-51a5663d cu-timeline">
-          <view class="_div data-v-51a5663d cu-time skeletons-rect">{{initTime}}</view>
-          <view class="_div data-v-51a5663d cu-item text-red icon-attentionforbidfill skeletons-rect">
-            <view class="_div data-v-51a5663d content bg-red shadow-blur"> 当前正在生成数据中... </view>
           </view>
         </view>
       </view>

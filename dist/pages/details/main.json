@@ -1,6 +1,3 @@
 {
-  "navigationBarTitleText": "详情",
-  "usingComponents": {
-    "skeletons": "/static/components/component/skeletons/index"
-  }
+  "navigationBarTitleText": "详情"
 }

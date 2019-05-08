@@ -1,24 +1,24 @@
 <template>
   <div class="marketConfig skeletons">
     <scroll-view scroll-x
-                 class="bg-red nav text-center">
+                 class="bg-set nav text-center">
       <div class="cu-item"
            :class="0==TabCur?'text-white cur':''"
            @tap='tabSelect(0)'
            data-id="0">
-        <text class='icon-camerafill'></text> 沪深概况
+        <text class='icon-newsfill css-color-e8'></text> 沪深概况
       </div>
       <div class="cu-item"
            :class="1==TabCur?'text-white cur':''"
            @tap='tabSelect(1)'
            data-id="1">
-        <text class='icon-upstagefill'></text> 排行榜
+        <text class='icon-rank css-color-e8'></text> 排行榜
       </div>
       <div class="cu-item"
            :class="2==TabCur?'text-white cur':''"
            @tap='tabSelect(2)'
            data-id="2">
-        <text class='icon-clothesfill'></text> 诊股
+        <text class='icon-servicefill css-color-e8'></text> 诊股
       </div>
     </scroll-view>
     <!-- 概况 -->
@@ -49,6 +49,17 @@
           <text :class="item.iconfont"></text>
         </div>
       </div>
+      <!-- 对比 -->
+      <view class="padding">
+        <view class="cu-progress radius striped active">
+          <span>涨</span>
+          <view class="bg-red"
+                :style="{width:addRate+'%'}">{{addRate}}%</view>
+          <view class="bg-green"
+                :style="{width:reduceRate+'%'}">{{reduceRate}}%</view>
+          <span>跌</span>
+        </view>
+      </view>
     </section>
     <!-- 排行 -->
     <section v-show="TabCur==1">
@@ -64,7 +75,7 @@
                 :key="sindex">
               <p class="rank-title">{{sign.sSecName}}</p>
               <div class="num-div">
-                <div :class="sign.riceStatus?'c-red':'c-green'">{{sign.fNow}}</div>
+                <div :class="sign.riceStatus?'c-red':'c-green'"><span :class="sign.riceStatus?'triangleupfill':'icon-triangledownfill'"></span>{{sign.fNow}}</div>
                 <span :class="sign.riceStatus?'c-red':'c-green'">{{sign.riceStatus?'+':''}}{{sign.rice}}</span>
                 <span :class="sign.rateStatus?'c-red':'c-green'">{{sign.rateStatus?'+':''}}{{sign.rate}}%</span>
               </div>
@@ -159,6 +170,8 @@
 
 <script>
 import { regular, formatTime } from "@/utils/index"
+import { mapMutations } from "vuex"
+
 export default {
   name: 'market',
   data () {
@@ -198,10 +211,12 @@ export default {
         'upList': '+',
         'downList': "-",
         'changeList': ''
-      }
+      },
+      addRate: 50,
+      reduceRate: 50
     }
   },
-  onLoad () {
+  onLoad (pageConfig) {
     this.getList()
     this.elements.map(v => {
       Object.assign(v, {
@@ -210,7 +225,18 @@ export default {
       })
     })
   },
+  onShow () {
+    let id = this.$store.state.code || ''
+    if (id) {
+      this.TabCur = 2
+      this.inputVal = id
+      this.getStockJetton(this.inputVal)
+    }
+  },
   methods: {
+    ...mapMutations({
+      setCode: "SET_CODE",
+    }),
     getList () {
       wx.cloud.callFunction({
         name: 'reptile',
@@ -218,6 +244,9 @@ export default {
       }).then(res => {
         this.is_capture_nodes = true
         this.dataList = res.result.home ? JSON.parse(res.result.home) : {}
+        let total = parseInt(this.dataList.zdfb_data.znum) + parseInt(this.dataList.zdfb_data.dnum)
+        this.addRate = ((parseInt(this.dataList.zdfb_data.znum) / total) * 100).toFixed(0)
+        this.reduceRate = ((parseInt(this.dataList.zdfb_data.dnum) / total) * 100).toFixed(0)
         this.is_complete = true
       }).catch(error => {
         console.log(error)
@@ -228,7 +257,6 @@ export default {
       if (index == 1) this.getRankList()
     },
     getSearch () {
-      console.log('inputVal', this.inputVal)
       this.getStockJetton(this.inputVal)
     },
     getRankList () {
@@ -245,7 +273,6 @@ export default {
           v.fNow = parseFloat(v.fNow).toFixed(2)
           v.riceStatus = v.rice > 0
           v.rateStatus = v.rate > 0
-          console.log(v.riceStatus, v.rateStatus)
         })
         this.rank.page = Math.ceil(getData.length / 6) || 0
         this.rank.list = getData
@@ -284,7 +311,6 @@ export default {
         }
       }
       for (let i in this.requestList) {
-        console.log('jieru1', i)
         let res = await this.getRankReal(this.requestList[i])
         let result = JSON.parse(res.result.home.content) ? JSON.parse(res.result.home.content).vPlateQuoteDesc : []
         result.forEach(v => {
@@ -296,7 +322,6 @@ export default {
       }
     },
     getRankReal (item) {
-      console.log('item', item)
       return wx.cloud.callFunction({
         name: 'reptile',
         data: { type: 'getRankReal', action: 'quote', ...item }
@@ -310,6 +335,8 @@ export default {
         this.jettons = this.parseJetton(res.result.home)
         this.trendData = this.parseResult(res.result.home)
         this.searchDate = formatTime(new Date())
+        //清除保留的诊股id
+        if (this.$store.state.code) this.setCode('')
       }).catch(error => {
         console.log(error)
       })
@@ -511,6 +538,9 @@ export default {
 .c-width {
   width: 200rpx;
   text-align: center;
+}
+.bg-set {
+  background: linear-gradient(to bottom right, #f73240 60%, #e91a28);
 }
 </style>
 

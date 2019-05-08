@@ -1,0 +1,610 @@
+
+.user-center-top .user-settings.data-v-04c1078a {
+  padding: 32rpx 48rpx;
+}
+.user-center-top .user-settings .user-icon-right.data-v-04c1078a {
+  float: right;
+  margin-right: 20rpx;
+}
+.user-center-top .user-settings .settings.data-v-04c1078a {
+  margin-right: 80rpx;
+}
+.user-center-top .user-settings .clearfix.data-v-04c1078a:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+.user-center .user-info.data-v-04c1078a {
+  display: flex;
+  height: 210rpx;
+  padding: 20rpx 0 0 80rpx;
+}
+.user-center .user-info-avatar.data-v-04c1078a {
+  overflow: hidden;
+  display: block;
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 50%;
+  border: 4rpx solid #fff;
+  box-shadow: 6rpx 6rpx 20rpx rgba(0, 0, 0, 0.2);
+}
+.user-center .user-info-detail.data-v-04c1078a {
+  display: flex;
+  align-items: center;
+  margin-left: 10rpx;
+  height: 160rpx;
+}
+.user-center .gap.data-v-04c1078a {
+  margin-bottom: 60rpx;
+}
+.user-center .at-list__item .item-extra__info.data-v-04c1078a {
+  max-width: 400rpx;
+}
+.setName.data-v-04c1078a {
+  font-size: 32rpx;
+}
+.user-info-avatar image.data-v-04c1078a {
+  border-radius: 50%;
+}
+.set-bg.data-v-04c1078a {
+  margin-top: -80rpx;
+}
+.coin-bg.data-v-04c1078a {
+  width: 100%;
+  height: 500rpx;
+  background: url("https://i.loli.net/2019/05/08/5cd26cd36a4c8.png") no-repeat center;
+  background-size: 50% 80%;
+  transition: 0.5s cubic-bezier(0.6, 4, 0.3, 0.8) all;
+}
+.shake.data-v-04c1078a {
+  animation-name: shake-rotate-data-v-04c1078a;
+  animation-duration: 0.5s;
+  animation-iteration-count: infinite;
+  animation-delay: 0.3s;
+}
+@keyframes shake-rotate-data-v-04c1078a {
+0% {
+    transform: scale(1.3, 0.9);
+}
+20% {
+    transform: scale(1.1, 1);
+}
+40% {
+    transform: scale(1.15, 0.9);
+}
+80% {
+    transform: scale(1.05, 1);
+}
+90% {
+    transform: scale(1, 0.99);
+}
+95% {
+    transform: scale(1.03, 0.99);
+}
+100% {
+    transform: scale(1);
+}
+}
+.coin-cont.data-v-04c1078a {
+  height: 500rpx;
+  width: 100%;
+  position: relative;
+  background-image: linear-gradient(to bottom, #29323c 0%, #485563 40%, #666 60%, #333 80%, #000 100%);
+}
+.coin-cont .coin.data-v-04c1078a {
+  z-index: 2;
+}
+.coin-cont .todayRunData.data-v-04c1078a {
+  width: 200rpx;
+  height: 500rpx;
+  position: absolute;
+  top: 20rpx;
+  left: 42rpx;
+}
+.coin-cont .todayRunData .profile.data-v-04c1078a {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+  float: left;
+  margin-right: 29rpx;
+  position: relative;
+  top: 20rpx;
+}
+.coin-cont .todayRunData .todayData.data-v-04c1078a {
+  width: 200rpx;
+  height: 100rpx;
+}
+.coin-cont .todayRunData .todayData text.data-v-04c1078a {
+  font-family: PingFang-SC-Medium;
+  font-size: 26rpx;
+  color: #ffffff;
+  letter-spacing: 0;
+}
+.coin-cont .todayRunData .todayData .todaywalk.data-v-04c1078a {
+  font-family: PingFangSC-Semibold;
+  font-size: 40rpx;
+  color: #ffffff;
+  letter-spacing: 0;
+}
+.coin-cont .todayRunData .FdZanZhu.data-v-04c1078a {
+  width: 200rpx;
+  height: 100rpx;
+}
+.coin-cont .todayRunData .FdZanZhu text.data-v-04c1078a {
+  font-family: PingFang-SC-Medium;
+  font-size: 26rpx;
+  color: #ffffff;
+  letter-spacing: 0;
+}
+.coin-cont .todayRunData .FdZanZhu .todaywalk.data-v-04c1078a {
+  font-family: PingFangSC-Semibold;
+  font-size: 40rpx;
+  color: #ffffff;
+  letter-spacing: 0;
+}
+.coin-cont .todayRunData ._button.data-v-04c1078a::after {
+  border: none;
+}
+.coin-cont .todayRunData .cbsiconCont.data-v-04c1078a {
+  margin-top: 14rpx;
+  width: 85rpx;
+  height: 72rpx;
+  margin-left: -20rpx;
+  background: rgba(0, 0, 0, 0);
+}
+.coin-cont .todayRunData .cbsiconCont .cbsicon.data-v-04c1078a {
+  width: 67rpx;
+  height: 72rpx;
+  margin-left: -15rpx;
+}
+.coin-cont .todayRunData .xm_fixed.data-v-04c1078a {
+  position: absolute;
+  bottom: 0;
+  left: 0rpx;
+  width: 100rpx;
+  height: 100rpx;
+}
+.coin-cont .todayRunData .xm_fixed .xm_inner.data-v-04c1078a {
+  position: absolute !important;
+  width: 100rpx !important;
+  height: 100rpx !important;
+  bottom: 0 !important;
+  right: 0 !important;
+}
+.coin-cont .recordContS.data-v-04c1078a {
+  position: absolute;
+  right: 0;
+  top: 32rpx;
+  background-color: rgba(198, 243, 245, 0.22);
+  min-width: 230rpx;
+  height: 74rpx;
+  border-radius: 40rpx 0 0 40rpx;
+}
+.coin-cont .recordContS .go-login-cont.data-v-04c1078a {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+.coin-cont .recordContS .go-login-cont .go-login-desc.data-v-04c1078a {
+  color: #ffffff;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30rpx;
+}
+.coin-cont .recordContS .go-login-cont ._button.data-v-04c1078a {
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  height: 100%;
+  width: 100%;
+}
+@keyframes mymoves-data-v-04c1078a {
+0% {
+    transform: scale(1);
+}
+10% {
+    transform: scale(1.2);
+}
+25% {
+    transform: scale(1);
+}
+50% {
+    transform: scale(1.2);
+}
+75% {
+    transform: scale(1);
+}
+}
+@-webkit-keyframes mymoves {
+0% {
+    transform: scale(1);
+}
+10% {
+    transform: scale(1.2);
+}
+25% {
+    transform: scale(1);
+}
+50% {
+    transform: scale(1.2);
+}
+75% {
+    transform: scale(1);
+}
+}
+.coin-cont .recordCont.data-v-04c1078a {
+  position: absolute;
+  right: 34rpx;
+  top: 32rpx;
+  background: rgba(198, 243, 245, 0.22);
+  height: 54rpx;
+  border-radius: 18rpx;
+  animation-duration: 800ms;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-out;
+  animation-delay: 0s;
+  animation-play-state: running;
+}
+.coin-cont .collect.data-v-04c1078a {
+  min-width: 270rpx;
+  padding: 0 20rpx;
+  height: 100rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+.coin-cont .collect .record.data-v-04c1078a {
+  width: 100%;
+  font-family: PingFang-SC-Medium;
+  color: #ffffff;
+  font-size: 24rpx;
+  margin: 0;
+  margin-left: 5rpx;
+  line-height: 52rpx;
+}
+.coin-cont .collect .coinRecord.data-v-04c1078a {
+  width: 100%;
+  margin-top: 5rpx;
+}
+.coin-cont .collect .coinRecord .CLeft.data-v-04c1078a {
+  float: left;
+}
+.coin-cont .collect .coinRecord .CLeft image.data-v-04c1078a {
+  width: 28rpx;
+  height: 28rpx;
+  vertical-align: middle;
+  margin-right: 19rpx;
+}
+.coin-cont .collect .coinRecord .CLeft .record.data-v-04c1078a {
+  margin-right: 18rpx;
+}
+.coin-cont .collect .coinRecord .moneyCount.data-v-04c1078a {
+  float: right;
+  font-family: PingFangSC-Semibold;
+  color: #ffffff;
+  font-size: 24rpx;
+  line-height: 52rpx;
+  vertical-align: middle;
+}
+.coin-cont .collect .luckyRecord.data-v-04c1078a {
+  width: 100%;
+  margin-top: -5rpx;
+}
+.coin-cont .collect .luckyRecord .CLeft.data-v-04c1078a {
+  float: left;
+}
+.coin-cont .collect .luckyRecord .CLeft image.data-v-04c1078a {
+  width: 25rpx;
+  height: 28rpx;
+  vertical-align: middle;
+  margin-right: 19rpx;
+}
+.coin-cont .collect .luckyRecord .CLeft .record.data-v-04c1078a {
+  margin-right: 18rpx;
+}
+.coin-cont .collect .luckyRecord .luckyCount.data-v-04c1078a {
+  float: right;
+  font-family: PingFangSC-Semibold;
+  color: #ffffff;
+  font-size: 24rpx;
+  line-height: 52rpx;
+  margin: 0;
+}
+.coin-cont .go-login-cont.data-v-04c1078a {
+  position: relative;
+  height: 100%;
+  width: 230rpx;
+}
+.coin-cont .go-login-cont .go-login-desc.data-v-04c1078a {
+  color: #ffffff;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30rpx;
+}
+.coin-cont .go-login-cont ._button.data-v-04c1078a {
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  height: 100%;
+  width: 100%;
+}
+.coin-cont .homeBgimg.data-v-04c1078a {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 1030rpx;
+  width: 750rpx;
+}
+.coin-cont .today-bushu-cont.data-v-04c1078a {
+  position: absolute;
+  color: #ffffff;
+  top: 20rpx;
+  left: 42rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.coin-cont .today-bushu-cont .bushu-count.data-v-04c1078a {
+  color: #ffffff;
+  font-size: 40rpx;
+  font-weight: 500;
+  text-shadow: 4rpx 4rpx 4rpx #666666;
+}
+.coin-cont .today-bushu-cont .bushu-desc.data-v-04c1078a {
+  margin-top: 8rpx;
+  font-size: 24rpx;
+  color: #ffffff;
+  letter-spacing: 0;
+}
+.coin-cont .money-cont.data-v-04c1078a {
+  position: absolute;
+  right: 0;
+  top: 20rpx;
+  display: flex;
+  align-items: center;
+  min-width: 230rpx;
+  height: 74rpx;
+  background: rgba(129, 247, 255, 0.24);
+  border-radius: 40rpx 0 0 40rpx;
+}
+.coin-cont .money-cont .user-head.data-v-04c1078a {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 100%;
+  border: 2rpx solid #ffffff;
+  margin-left: 10rpx;
+}
+.coin-cont .money-cont .money-icon.data-v-04c1078a {
+  width: 16.8rpx;
+  height: 25.6rpx;
+  margin-left: 12rpx;
+}
+.coin-cont .money-cont .money-count.data-v-04c1078a {
+  font-size: 28rpx;
+  color: #ffffff;
+  letter-spacing: 0;
+}
+.coin-cont .money-cont .duihuan-btn.data-v-04c1078a {
+  margin-left: 12rpx;
+  font-size: 25rpx;
+  color: #ffffff;
+  letter-spacing: 0;
+  padding: 8rpx 15rpx;
+  background-image: linear-gradient(-154deg, #78c5f8 0%, #629bf3 100%);
+  border-radius: 100rpx;
+  margin-right: 18rpx;
+}
+.coin-cont .money-cont .go-login-cont.data-v-04c1078a {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+.coin-cont .money-cont .go-login-cont .go-login-desc.data-v-04c1078a {
+  color: #ffffff;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30rpx;
+}
+.coin-cont .money-cont .go-login-cont ._button.data-v-04c1078a {
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  height: 100%;
+  width: 100%;
+}
+.coin-cont .coin-btn-adver.data-v-04c1078a {
+  position: absolute;
+  top: 153rpx;
+  right: 0rpx;
+  width: 200rpx;
+  height: 600rpx;
+}
+.coin-cont .coin-btn-cont.data-v-04c1078a {
+  position: absolute;
+  bottom: 63rpx;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.coin-cont .coin-btn-cont view.data-v-04c1078a {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24rpx;
+  border-radius: 100%;
+}
+.coin-cont .coin-btn-cont view .gotologinBtn.data-v-04c1078a {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}
+.coin-cont .coin-btn-cont .vip-btn.data-v-04c1078a {
+  position: relative;
+  margin-left: 40rpx;
+}
+.coin-cont .coin-btn-cont .gonglue-btn.data-v-04c1078a {
+  margin-left: 30rpx;
+}
+.coin-cont .coin-btn-cont .vip-btn.data-v-04c1078a,
+.coin-cont .coin-btn-cont .gonglue-btn.data-v-04c1078a {
+  color: #ffffff;
+  width: 75rpx;
+  height: 75rpx;
+}
+.coin-cont .coin-btn-cont .invit-btn-shop .shop-btn-img.data-v-04c1078a {
+  width: 96rpx;
+  height: 96rpx;
+}
+.coin-cont .coin-btn-cont .invit-btn.data-v-04c1078a {
+  margin-left: 300rpx;
+  width: 194rpx !important;
+  height: 165rpx;
+  position: relative;
+}
+.coin-cont .coin-btn-cont .invit-btn #bubu.data-v-04c1078a {
+  width: 194rpx !important;
+  height: 165rpx;
+  display: block;
+}
+.coin-cont .coin-btn-cont .invit-btn .invit-btn-img.data-v-04c1078a {
+  width: 154rpx;
+  height: 154rpx;
+}
+.coin-cont .coin-btn-cont .invit-btn .inviteBtn.data-v-04c1078a {
+  width: 96rpx;
+  height: 96rpx;
+  position: absolute;
+  top: center;
+  left: center;
+  z-index: 2;
+}
+.coin-cont .coin-btn-cont .invit-btn .inviteBtn1.data-v-04c1078a,
+.coin-cont .coin-btn-cont .invit-btn .inviteBtn2.data-v-04c1078a {
+  width: 79.68rpx;
+  height: 96rpx;
+  position: absolute;
+  top: center;
+  left: center;
+  margin-right: 16rpx;
+  opacity: 0.5;
+  z-index: 0;
+  -webkit-animation: shake-data-v-04c1078a 3.5s linear infinite;
+  animation: shake-data-v-04c1078a 3.5s linear infinite;
+}
+.coin-cont .coin-btn-cont .invit-btn .inviteBtn2.data-v-04c1078a {
+  -webkit-animation-delay: 1.75s;
+  animation-delay: 1.75s;
+}
+@keyframes shake-data-v-04c1078a {
+0% {
+    transform: scale(1);
+    opacity: 0.3;
+}
+50% {
+    transform: scale(1.4);
+    opacity: 0;
+}
+100% {
+    transform: scale(1);
+    opacity: 0.3;
+}
+}
+.coin-cont .coin-btn-cont .invit-btn .invit-btn-desc.data-v-04c1078a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ffffff;
+  height: 100%;
+  width: 100%;
+  font-size: 24rpx;
+}
+.coin-cont .coins.data-v-04c1078a {
+  transition: all 2s cubic-bezier(0.19, 1, 0.22, 1);
+}
+.coin-cont .coins .coinConten.data-v-04c1078a {
+  height: 100%;
+  width: 100%;
+}
+.coin-cont .coins .coinConten .adEnter.data-v-04c1078a {
+  width: 148rpx;
+  height: 160rpx;
+  position: relative;
+  top: 40rpx;
+  right: 30rpx;
+}
+.coin-cont .coins .coinConten .getFormeId.data-v-04c1078a {
+  position: absolute;
+  top: 0;
+  width: 148rpx;
+  height: 160rpx;
+  opacity: 0;
+}
+.coin-cont .coins .coinConten image.data-v-04c1078a {
+  width: 148rpx;
+  height: 160rpx;
+}
+.coin-cont .coin.data-v-04c1078a {
+  border-radius: 100%;
+  position: absolute;
+  transition: all 2s cubic-bezier(0.19, 1, 0.22, 1);
+}
+.coin-cont .coin .coinConten.data-v-04c1078a {
+  border-radius: 100%;
+  height: 100%;
+  width: 100%;
+  animation: mymove-data-v-04c1078a 2s infinite alternate;
+  -webkit-animation: mymove-data-v-04c1078a 2s infinite alternate;
+}
+.coin-cont .coin .coinConten .adEnter.data-v-04c1078a {
+  width: 100rpx;
+  height: 80rpx;
+  position: relative;
+  top: 40rpx;
+  right: 30rpx;
+}
+.coin-cont .coin .coinConten .getFormeId.data-v-04c1078a {
+  position: absolute;
+  top: 0;
+  width: 168rpx;
+  height: 168rpx;
+  opacity: 0;
+}
+.coin-cont .coin .coinConten image.data-v-04c1078a {
+  width: 168rpx;
+  height: 168rpx;
+}
+@keyframes mymove-data-v-04c1078a {
+from {
+    transform: translateY(30rpx);
+}
+to {
+    transform: translateY(0rpx);
+}
+}
+@-webkit-keyframes mymove {
+from {
+    transform: translateY(30rpx);
+}
+to {
+    transform: translateY(0rpx);
+}
+}

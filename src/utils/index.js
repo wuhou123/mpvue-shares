@@ -84,7 +84,16 @@ export const regular = function(str) {
     .replace(/&nbsp;/gim, ' ')
     .trim()
 }
+
+export const RandomNum = function(Min, Max) {
+  let Range = Max - Min
+  let Rand = Math.random()
+  let num = Min + parseInt(Rand * Range) //舍去
+  return num
+}
+
 export default {
   formatNumber,
-  formatTime
+  formatTime,
+  RandomNum
 }

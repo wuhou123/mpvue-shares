@@ -13,7 +13,8 @@ const URL = {
   rankList: 'https://sec.wedengta.com/getSecInfo',
   rankReal: 'https://sec.wedengta.com/getMarketQuotation',
   news: 'https://api.wallstreetcn.com/apiv1/content/fabricate-articles',
-  newsDetail: 'https://api.wallstreetcn.com/apiv1/content/articles/'
+  newsDetail: 'https://api.wallstreetcn.com/apiv1/content/articles/',
+  lives: 'https://api.xuangubao.cn/api/messages/live'
 }
 
 module.exports = {
@@ -191,6 +192,28 @@ module.exports = {
         .catch(error => {
           console.log(error)
           reject('获取新闻详情失败！')
+        })
+    })
+  },
+  getLives(item) {
+    let options = {
+      method: 'GET',
+      url: URL.lives,
+      qs: item,
+      json: true,
+      allow_redirects: false,
+      headers: {
+        'content-type': 'application/json'
+      }
+    }
+    return new Promise((resolve, reject) => {
+      request(options)
+        .then(res => {
+          resolve(res)
+        })
+        .catch(error => {
+          console.log(error)
+          reject('获取直播失败！')
         })
     })
   }

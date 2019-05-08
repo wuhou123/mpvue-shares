@@ -33,6 +33,8 @@ exports.main = async (event, context) => {
     case 'getDetail':
       res = await reptile.getDetail(event)
       break
+    case 'getLives':
+      res = await reptile.getLives(event)
   }
   return {
     home: res

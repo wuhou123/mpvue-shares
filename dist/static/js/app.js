@@ -1,17 +1,17 @@
-global.webpackJsonp([2],{
+global.webpackJsonp([1],{
 
-/***/ 53:
+/***/ 50:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__App__ = __webpack_require__(55);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__store_index__ = __webpack_require__(59);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__static_css_icon_css__ = __webpack_require__(70);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__App__ = __webpack_require__(52);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__store_index__ = __webpack_require__(56);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__static_css_icon_css__ = __webpack_require__(67);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__static_css_icon_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__static_css_icon_css__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__static_css_colorui_css__ = __webpack_require__(71);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__static_css_colorui_css__ = __webpack_require__(68);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__static_css_colorui_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__static_css_colorui_css__);
 
 
@@ -30,7 +30,7 @@ app.$mount();
 /* harmony default export */ __webpack_exports__["default"] = ({
   // 这个字段走 app.json
   config: {
-    pages: ['^pages/home/main', 'pages/details/main', 'pages/market/main'],
+    pages: ['^pages/home/main', 'pages/details/main', 'pages/market/main', 'pages/news/main'],
     window: {
       navigationBarBackgroundColor: '#F73240',
       navigationBarTextStyle: 'white',
@@ -46,15 +46,15 @@ app.$mount();
       borderStyle: 'white',
       backgroundColor: '#fff',
       list: [{
-        text: '股市日历',
+        text: '直播',
         pagePath: 'pages/home/main',
-        iconPath: 'static/icon/weding.png',
-        selectedIconPath: 'static/icon/weding_focus.png'
+        iconPath: 'static/icon/home.png',
+        selectedIconPath: 'static/icon/home_focus.png'
       }, {
         text: '行情',
         pagePath: 'pages/market/main',
-        iconPath: 'static/icon/weding.png',
-        selectedIconPath: 'static/icon/weding_focus.png'
+        iconPath: 'static/icon/invest.png',
+        selectedIconPath: 'static/icon/invest_focus.png'
       }, {
         text: '我的',
         pagePath: 'pages/my/main',
@@ -67,17 +67,17 @@ app.$mount();
 
 /***/ }),
 
-/***/ 55:
+/***/ 52:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_mpvue_loader_lib_selector_type_script_index_0_App_vue__ = __webpack_require__(58);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_mpvue_loader_lib_selector_type_script_index_0_App_vue__ = __webpack_require__(55);
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(56)
+  __webpack_require__(53)
 }
-var normalizeComponent = __webpack_require__(0)
+var normalizeComponent = __webpack_require__(5)
 /* script */
 
 /* template */
@@ -119,14 +119,14 @@ if (false) {(function () {
 
 /***/ }),
 
-/***/ 56:
+/***/ 53:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
 
-/***/ 58:
+/***/ 55:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -151,16 +151,16 @@ if (false) {(function () {
 
 /***/ }),
 
-/***/ 59:
+/***/ 56:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__state__ = __webpack_require__(60);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__mutations__ = __webpack_require__(61);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vuex_persistedstate__ = __webpack_require__(67);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__state__ = __webpack_require__(57);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__mutations__ = __webpack_require__(58);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vuex_persistedstate__ = __webpack_require__(64);
 
 
 
@@ -187,7 +187,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
 
 /***/ }),
 
-/***/ 60:
+/***/ 57:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -201,13 +201,13 @@ var state = {
 
 /***/ }),
 
-/***/ 61:
+/***/ 58:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_defineProperty__ = __webpack_require__(62);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_defineProperty__ = __webpack_require__(59);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_defineProperty___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_defineProperty__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mutation_types__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mutation_types__ = __webpack_require__(30);
 
 
 var _matations;
@@ -233,19 +233,19 @@ var matations = (_matations = {}, __WEBPACK_IMPORTED_MODULE_0_babel_runtime_help
 
 /***/ }),
 
-/***/ 70:
+/***/ 67:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
 
-/***/ 71:
+/***/ 68:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ })
 
-},[53]);
+},[50]);
 //# sourceMappingURL=app.js.map
