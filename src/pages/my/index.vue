@@ -1,6 +1,6 @@
 <template>
   <div class="user-center bg-grey">
-    <div class='user-info bg-white'>
+    <div class='user-info bg-white gap'>
       <div class='user-info-avatar'>
         <open-data type='userAvatarUrl' />
       </div>
@@ -10,15 +10,42 @@
                    class="setName" />
       </div>
     </div>
+    <div class="cu-bar bg-white solid-bottom">
+      <div class='action'>
+        <text class='icon-titles text-orange'></text> 越运动越幸运
+      </div>
+    </div>
     <!--金币-->
     <div class="coin-cont">
+      <!-- 左上角区域==== -->
+      <view class="todayRunData">
+        <view class="todayData">
+          <text>今日步数</text>
+          <view class="todaywalk">{{ExpectData.TodayWalk}}</view>
+        </view>
+      </view>
+      <!-- 右上角区域==== -->
+      <view class="recordCont"
+            :style="{'animation-name':isAni?'mymoves':''}">
+        <view class="collect">
+          <view class="coinRecord">
+            <view class="CLeft">
+              <image src="../../static/imgs/coinRecord.png"></image>
+              <text class="record">股运</text>
+            </view>
+            <text class="moneyCount">{{ExpectData.total}}</text>
+          </view>
+        </view>
+      </view>
       <div class="coin-bg"
-           :class="ShopShakeType?'shake':''"></div>
+           :style="{'animation-name':ShopShakeType?'mymoves':''}">
+      </div>
       <div v-for="(v,index) in CoinList"
            :key="index">
         <div class="coin"
              :style="{'right':v.right+'px','top':v.top+'px','opacity':v.opacity,'transform':'translate('+v.translateX+'px,'+v.translateY+'px)'}"
-             @click.stop="CoinClick(v,index)">
+             @click.stop="CoinClick(v,index)"
+             v-show="v.showType">
           <div class="coinConten">
             <image :src="v.ImgUrl" />
             <button class="getFormeId"></button>
@@ -37,69 +64,48 @@
 
 <script>
 import Request from '@/api/allApi'
-import { RandomNum } from "@/utils/index"
+import { RandomNum, formatDate } from "@/utils/index"
+import WXBizDataCrypt from '@/utils/RdWXBizDataCrypt'
 
 export default {
   data () {
     return {
       ShopShakeType: false,
-      CoinList: [{
-        right: 10,
-        top: 20,
-        translateY: 10,
-        translateX: 20,
-        opacity: 1,
-        ImgUrl: '../../static/imgs/coin6.png'
-      }, {
-        right: 50,
-        top: 20,
-        translateY: 50,
-        translateX: 20,
-        opacity: 1,
-        ImgUrl: '../../static/imgs/coin2.png'
-      },
-      {
-        right: 10,
-        top: 50,
-        translateY: 50,
-        translateX: 10,
-        opacity: 1,
-        ImgUrl: '../../static/imgs/coin3.png'
-      }, {
-        right: 30,
-        top: 30,
-        translateY: 30,
-        translateX: 30,
-        opacity: 1,
-        ImgUrl: '../../static/imgs/coin4.png'
-      },
-      {
-        right: 300,
-        top: 30,
-        translateY: 30,
-        translateX: 30,
-        opacity: 1,
-        ImgUrl: '../../static/imgs/coin5.png'
-      }],
+      CoinList: [],
       getObj: {},
       coin: {
         width: 148,
         height: 160
-      }
+      },
+      appid: 'wx64b1735b4eb0b71d',
+      secret: 'e648211b2e89e87fd554bb7292eb3b75',
+      ExpectData: {
+        TodayWalk: 0,
+        currency: 0,
+        timestamp: 0,
+        total: 0
+      },
+      isAni: false,
+      openid: '',
     }
   },
 
   methods: {
     CoinClick (v, index) {
-      console.log(this.CoinList[index].right, this.CoinList[index].top)
-      this.CoinList[index].right == 180 && (this.CoinList[index].right = 185)
       this.CoinList[index].translateY = `-${this.CoinList[index].top / 2}`
       this.CoinList[index].translateX = `${this.CoinList[index].right - 180}`
       this.CoinList[index].opacity = 0
       this.ShopShakeType = true
+      this.isAni = true
+      //金币提交
+      this.ExpectData.currency++
+      this.ExpectData.total++
+      this.sumbmitRunData(this.openid, this.ExpectData)
       setTimeout(() => {
         this.CoinList.map(v => {
           this.ShopShakeType = false
+          this.isAni = false
+          this.CoinList[index].showType = false
         })
       }, 500)
     },
@@ -122,23 +128,138 @@ export default {
         }
       }).exec()
     },
-    RandomMoneyMake (CoinAry, obj) {
-      CoinAry.forEach(v => {
+    RandomMoneyMake (n, obj) {
+      let lengths = parseInt(n)
+      this.CoinList = []
+      for (let i = 0; i < lengths; i++) {
+        let v = {}
         v.translateX = 0
         v.translateY = 0
         v.opacity = 1
-        v.right = RandomNum(10, (this.getObj.width - this.coin.width) / 2),
-          v.top = RandomNum(10, (this.getObj.height - this.coin.height) / 2)
+        v.right = RandomNum(10, (this.getObj.width - this.coin.width) / 2)
+        v.top = RandomNum(10, (this.getObj.height - this.coin.height) / 2)
+        v.ImgUrl = `../../static/imgs/coin${RandomNum(2, 6)}.png`
+        v.showType = true
+        this.CoinList.push(v)
+      }
+      console.log(n, this.CoinList)
+    },
+    getRunData () {
+      let that = this
+      wx.login({
+        success: function (res) {
+          let code = res.code
+          that.getSessionKey(code)
+        }
       })
-      this.CoinList = CoinAry
+    },
+    getSessionKey (code) {
+      let that = this
+      wx.cloud.callFunction({
+        name: 'reptile',
+        data: { type: 'getSessionKey', appid: that.appid, secret: that.secret, js_code: code, grant_type: 'authorization_code' }
+      }).then(res => {
+        console.log('res', res)
+        wx.getWeRunData({//解密微信运动
+          success (datas) {
+            let encryptedData = datas.encryptedData
+            let iv = datas.iv
+            let pc = new WXBizDataCrypt(that.appid, res.result.home.session_key)
+            let runData = pc.decryptData(encryptedData, iv) || []
+            //今日步数
+            let currentData = runData.stepInfoList[runData.stepInfoList.length - 1]
+            that.ExpectData.TodayWalk = currentData.step
+            that.ExpectData.timestamp = currentData.timestamp
+            that.openid = res.result.home.openid
+            //提交步数
+            const db = wx.cloud.database()
+            const run = db.collection('runDatas')
+            run
+              .where({
+                openid: that.openid
+              })
+              .get()
+              .then(response => {
+                console.log('response', response)
+                if (!response.data[0]) {
+                  //新用户
+                  that.sumbmitRunData(that.openid, that.ExpectData)
+                  that.RandomMoneyMake(Math.ceil(that.ExpectData.TodayWalk / 1000), that.getObj)
+                } else {
+                  that.ExpectData.currency = response.data[0].items.currency || 0
+                  console.log(formatDate(that.ExpectData.timestamp * 1000, 'yyyy-MM-dd'), response.data[0].items.date)
+                  if (formatDate(that.ExpectData.timestamp * 1000, 'yyyy-MM-dd') != response.data[0].items.date) {
+                    response.data[0].items.currency = 0
+                    that.resetCurrenty(that.ExpectData)
+                  }
+                  that.ExpectData.total = response.data[0].items.total || 0
+                  that.sumbmitRunData(that.openid, that.ExpectData, true)
+                  let bites = Math.ceil(that.ExpectData.TodayWalk / 1000) - response.data[0].items.currency
+                  console.log('bites', bites, response.data[0].items.currency)
+                  if (bites > 0) that.RandomMoneyMake(bites, that.getObj)
+                }
+              })
+              .catch(error => {
+              })
+
+
+          },
+          fail (error) {
+            wx.showModal({
+              title: '提示',
+              content: '开发者未开通微信运动，请关注“微信运动”公众号后重试',
+              showCancel: false,
+              confirmText: '知道了'
+            })
+          }
+        })
+      }).catch(error => {
+        console.log(error)
+      })
+    },
+    async sumbmitRunData (openid, datas, type) {
+      datas['date'] = formatDate(datas.timestamp * 1000, 'yyyy-MM-dd')
+      let list = {
+        openid: openid,
+        items: datas
+      }
+      if (type) {
+        initRunData
+        wx.cloud.callFunction({
+          name: 'reptile',
+          data: { type: 'initRunData', list: list }
+        }).then(res => {
+          console.log('333', res)
+        })
+      } else {
+        wx.cloud.callFunction({
+          name: 'reptile',
+          data: { type: 'upDateRunDate', list: list }
+        }).then(res => {
+          console.log('11111', res)
+        })
+      }
+
+    },
+    async resetCurrenty (datas) {
+      console.log('jinru')
+      datas['date'] = formatDate(datas.timestamp * 1000, 'yyyy-MM-dd')
+      let list = {
+        openid: openid,
+        items: datas
+      }
+      wx.cloud.callFunction({
+        name: 'reptile',
+        data: { type: 'resetCurrenty', list: list }
+      }).then(res => {
+        console.log('222', res)
+      })
     }
   },
 
   mounted () {
     this.CoinsRender()
-    setInterval(() => {
-      this.RandomMoneyMake(this.CoinList, this.getObj)
-    }, 8000)
+    this.getRunData()
   }
 
 }
@@ -187,7 +308,7 @@ export default {
     }
   }
   .gap {
-    margin-bottom: 30px;
+    margin-bottom: 5px;
   }
   // .bottom-tab {
   //     margin-bottom: 150px;
@@ -211,13 +332,11 @@ export default {
   background: url("https://i.loli.net/2019/05/08/5cd26cd36a4c8.png") no-repeat
     center;
   background-size: 50% 80%;
-  transition: 0.5s cubic-bezier(0.6, 4, 0.3, 0.8) all;
-}
-.shake {
-  animation-name: shake-rotate;
-  animation-duration: 0.5s;
-  animation-iteration-count: infinite;
-  animation-delay: 0.3s;
+  animation-duration: 500ms;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-out;
+  animation-delay: 0s;
+  animation-play-state: running;
 }
 
 @keyframes shake-rotate {
@@ -424,7 +543,7 @@ export default {
     animation-duration: 800ms;
     animation-iteration-count: 1;
     animation-timing-function: ease-out;
-    animation-delay: 0s;
+    animation-delay: 0.4s;
     animation-play-state: running;
   }
   .collect {

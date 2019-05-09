@@ -35,7 +35,7 @@
   height: 160rpx;
 }
 .user-center .gap.data-v-04c1078a {
-  margin-bottom: 60rpx;
+  margin-bottom: 10rpx;
 }
 .user-center .at-list__item .item-extra__info.data-v-04c1078a {
   max-width: 400rpx;
@@ -54,13 +54,11 @@
   height: 500rpx;
   background: url("https://i.loli.net/2019/05/08/5cd26cd36a4c8.png") no-repeat center;
   background-size: 50% 80%;
-  transition: 0.5s cubic-bezier(0.6, 4, 0.3, 0.8) all;
-}
-.shake.data-v-04c1078a {
-  animation-name: shake-rotate-data-v-04c1078a;
-  animation-duration: 0.5s;
-  animation-iteration-count: infinite;
-  animation-delay: 0.3s;
+  animation-duration: 500ms;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-out;
+  animation-delay: 0s;
+  animation-play-state: running;
 }
 @keyframes shake-rotate-data-v-04c1078a {
 0% {
@@ -246,7 +244,7 @@
   animation-duration: 800ms;
   animation-iteration-count: 1;
   animation-timing-function: ease-out;
-  animation-delay: 0s;
+  animation-delay: 0.4s;
   animation-play-state: running;
 }
 .coin-cont .collect.data-v-04c1078a {

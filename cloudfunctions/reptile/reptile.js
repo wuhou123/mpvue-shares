@@ -14,7 +14,8 @@ const URL = {
   rankReal: 'https://sec.wedengta.com/getMarketQuotation',
   news: 'https://api.wallstreetcn.com/apiv1/content/fabricate-articles',
   newsDetail: 'https://api.wallstreetcn.com/apiv1/content/articles/',
-  lives: 'https://api.xuangubao.cn/api/messages/live'
+  lives: 'https://api.xuangubao.cn/api/messages/live',
+  sessionKey: 'https://api.weixin.qq.com/sns/jscode2session?'
 }
 
 module.exports = {
@@ -214,6 +215,28 @@ module.exports = {
         .catch(error => {
           console.log(error)
           reject('获取直播失败！')
+        })
+    })
+  },
+  getSessionKey(item) {
+    let options = {
+      method: 'GET',
+      url: URL.sessionKey,
+      qs: item,
+      json: true,
+      allow_redirects: false,
+      headers: {
+        'content-type': 'application/json'
+      }
+    }
+    return new Promise((resolve, reject) => {
+      request(options)
+        .then(res => {
+          resolve(res)
+        })
+        .catch(error => {
+          console.log(error)
+          reject('获取session_key失败！')
         })
     })
   }

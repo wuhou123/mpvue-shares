@@ -91,9 +91,37 @@ export const RandomNum = function(Min, Max) {
   let num = Min + parseInt(Rand * Range) //舍去
   return num
 }
-
+export const formatDate = function(date, format) {
+  let dates = new Date(date)
+  var o = {
+    'M+': dates.getMonth() + 1, // month
+    'd+': dates.getDate(), // day
+    'h+': dates.getHours(), // hour
+    'H+': dates.getHours(), // hour
+    'm+': dates.getMinutes(), // minute
+    's+': dates.getSeconds(), // second
+    'q+': Math.floor((dates.getMonth() + 3) / 3), // quarter
+    S: dates.getMilliseconds() // millisecond
+  }
+  if (/(y+)/.test(format)) {
+    format = format.replace(
+      RegExp.$1,
+      (dates.getFullYear() + '').substr(4 - RegExp.$1.length)
+    )
+  }
+  for (var k in o) {
+    if (new RegExp('(' + k + ')').test(format)) {
+      format = format.replace(
+        RegExp.$1,
+        RegExp.$1.length == 1 ? o[k] : ('00' + o[k]).substr(('' + o[k]).length)
+      )
+    }
+  }
+  return format
+}
 export default {
   formatNumber,
   formatTime,
-  RandomNum
+  RandomNum,
+  formatDate
 }
