@@ -14,27 +14,31 @@
       </div>
     </scroll-view>
     <!-- 推荐 -->
-    <section v-show="TabCur===0||TabCur===1||TabCur===2">
-      <div class="cu-card article no-card border-top"
-           v-for="(item,index) in newsList[TabCur]"
-           :key="index"
-           @click="goDetail(item)">
-        <div class="cu-item shadow">
-          <div class="title">
-            <div class="text-cut">{{item.resource.title}}</div>
-          </div>
-          <div class="content">
-            <image :src="item.resource.image_uri"
-                   mode="aspectFill"></image>
-            <div class="desc">
-              <div class="text-content">{{item.resource.content_short}}</div>
-              <div>
+    <scroll-view scroll-y>
+      <section v-show="TabCur===0||TabCur===1||TabCur===2">
+        <div class="cu-card article no-card border-top"
+             v-for="(item,index) in newsList[TabCur]"
+             :key="index"
+             @click="goDetail(item)">
+          <div class="cu-item shadow">
+            <div class="title">
+              <div class="text-cut">{{item.resource.title}}</div>
+            </div>
+            <div class="content">
+              <image :src="item.resource.image_uri"
+                     lazy-load
+                     mode="aspectFill"></image>
+              <div class="desc">
+                <div class="text-content">{{item.resource.content_short}}</div>
+                <div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </scroll-view>
+
     <!-- 日历 -->
     <section v-if="TabCur===3">
       <div class="cu-timeline"
@@ -117,6 +121,9 @@ export default {
       setCode: "SET_CODE",
       setUserInfo: "SET_USERINFO"
     }),
+    onPageScroll () {
+      console.log('111')
+    },
     searchTo (item) {
       let id = item.split('.')[0]
       this.setCode(id)
@@ -197,17 +204,17 @@ export default {
       }).then(res => {
         this.loadModal = false
         let data = res.result.home.Messages || []
-        data.forEach(v => {
+        this.liveList = data
+        this.liveList.forEach(v => {
           v.CreatedAt = this.getTime(v.CreatedAt)
         })
-        this.liveList = data
         this.goTop()
       }).catch(error => {
         this.loadModal = false
       })
     },
     add0 (m) {
-      return m < 10 ? m + '0' : m
+      return m < 10 ? '0' + m : m
     },
     getTime (time) {
       let date = parseInt(time) * 1000
@@ -224,7 +231,10 @@ export default {
   onLoad (pageConfig) {
     this.TabCur = parseInt(pageConfig.tabCur) || 0
     this.tabSelect(this.TabCur)
-  }
+  },
+  onPageScroll () {
+
+  },
 };
 </script>
 

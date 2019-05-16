@@ -1,5 +1,5 @@
 <template>
-  <div class="user-center bg-grey">
+  <div class="user-center">
     <div class='user-info bg-white gap'>
       <div class='user-info-avatar'>
         <open-data type='userAvatarUrl' />
@@ -66,6 +66,9 @@
 import Request from '@/api/allApi'
 import { RandomNum, formatDate } from "@/utils/index"
 import WXBizDataCrypt from '@/utils/RdWXBizDataCrypt'
+//音频
+const innerAudioContext = wx.createInnerAudioContext();
+innerAudioContext.src = 'https://www.wuhou123.cn/coin.mp3';
 
 export default {
   data () {
@@ -108,6 +111,8 @@ export default {
           this.CoinList[index].showType = false
         })
       }, 500)
+      innerAudioContext.seek(0)
+      innerAudioContext.play()
     },
     CoinsRender (CoinAry) {
       const _this = this
@@ -159,7 +164,6 @@ export default {
         name: 'reptile',
         data: { type: 'getSessionKey', appid: that.appid, secret: that.secret, js_code: code, grant_type: 'authorization_code' }
       }).then(res => {
-        console.log('res', res)
         wx.getWeRunData({//解密微信运动
           success (datas) {
             let encryptedData = datas.encryptedData
@@ -180,22 +184,19 @@ export default {
               })
               .get()
               .then(response => {
-                console.log('response', response)
                 if (!response.data[0]) {
                   //新用户
                   that.sumbmitRunData(that.openid, that.ExpectData)
                   that.RandomMoneyMake(Math.ceil(that.ExpectData.TodayWalk / 1000), that.getObj)
                 } else {
                   that.ExpectData.currency = response.data[0].items.currency || 0
-                  console.log(formatDate(that.ExpectData.timestamp * 1000, 'yyyy-MM-dd'), response.data[0].items.date)
                   if (formatDate(that.ExpectData.timestamp * 1000, 'yyyy-MM-dd') != response.data[0].items.date) {
                     response.data[0].items.currency = 0
-                    that.resetCurrenty(that.ExpectData)
+                    that.resetCurrenty(that.openid, that.ExpectData)
                   }
                   that.ExpectData.total = response.data[0].items.total || 0
                   that.sumbmitRunData(that.openid, that.ExpectData, true)
                   let bites = Math.ceil(that.ExpectData.TodayWalk / 1000) - response.data[0].items.currency
-                  console.log('bites', bites, response.data[0].items.currency)
                   if (bites > 0) that.RandomMoneyMake(bites, that.getObj)
                 }
               })
@@ -241,8 +242,7 @@ export default {
       }
 
     },
-    async resetCurrenty (datas) {
-      console.log('jinru')
+    async resetCurrenty (openid, datas) {
       datas['date'] = formatDate(datas.timestamp * 1000, 'yyyy-MM-dd')
       let list = {
         openid: openid,
@@ -369,13 +369,20 @@ export default {
   height: 500rpx;
   width: 100%;
   position: relative;
+  // background-image: linear-gradient(
+  //   to bottom,
+  //   #9370db 0%,
+  //   #9370db 40%,
+  //   #537895 60%,
+  //   #333 80%,
+  //   #000 100%
+  // );
   background-image: linear-gradient(
     to bottom,
-    #29323c 0%,
-    #485563 40%,
-    #666 60%,
-    #333 80%,
-    #000 100%
+    #3ab5b0 0%,
+    #3d99be 20%,
+    #56317a 60%,
+    #000000 100%
   );
   .coin {
     z-index: 2;

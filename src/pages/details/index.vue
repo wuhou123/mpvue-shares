@@ -35,9 +35,19 @@ export default {
   onLoad (options) {
     let id = options.id
     this.textList = {}
-    this.getDetail(id)
+    if (options.type === 'banner') this.getBannerData(id)
+    else this.getDetail(id)
   },
   methods: {
+    getBannerData (index) {
+      this.LoadProgress()
+      const db = wx.cloud.database()
+      const list = db.collection('notice')
+      list.get().then(res => {
+        this.loadProgress = 100
+        this.textList = res.data[0].list[index] || []
+      }).catch(error => console.log(error))
+    },
     getDetail (id) {
       this.LoadProgress()
       wx.cloud.callFunction({

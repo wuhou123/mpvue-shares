@@ -61,7 +61,7 @@ exports.main = async (event, context) => {
                     items: {
                       currency: response.data[0].items.currency + 1,
                       total: response.data[0].items.total + 1,
-                      date: event.list.date
+                      date: event.list.items.date
                     }
                   }
                 })
@@ -98,7 +98,7 @@ exports.main = async (event, context) => {
                 .update({
                   data: {
                     items: {
-                      date: event.list.date,
+                      date: event.list.items.date,
                       TodayWalk: event.list.items.TodayWalk,
                       timestamp: event.list.items.timestamp
                     }
@@ -133,7 +133,9 @@ exports.main = async (event, context) => {
                 data: {
                   items: {
                     currency: 0,
-                    date: event.list.date
+                    date: event.list.items.date,
+                    TodayWalk: event.list.items.TodayWalk,
+                    timestamp: event.list.items.timestamp
                   }
                 }
               })

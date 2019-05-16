@@ -1,7 +1,7 @@
 <template>
   <div class="marketConfig skeletons">
     <scroll-view scroll-x
-                 class="bg-set nav text-center">
+                 class="bg-set nav text-center skeletons-rect">
       <div class="cu-item"
            :class="0==TabCur?'text-white cur':''"
            @tap='tabSelect(0)'
@@ -23,11 +23,11 @@
     </scroll-view>
     <!-- 概况 -->
     <section v-show="TabCur==0">
-      <div class="cu-bar bg-white solid-bottom">
+      <!-- <div class="cu-bar bg-white solid-bottom skeletons-rect">
         <div class='action'>
           <p class='icon-titles text-orange '></p> 概况
         </div>
-      </div>
+      </div> -->
       <div class='nav-list margin-top'
            v-if="TabCur==0">
         <div class="nav-li skeletons-rect"
@@ -50,15 +50,21 @@
         </div>
       </div>
       <!-- 对比 -->
-      <view class="padding">
-        <view class="cu-progress radius striped active">
+      <view class="padding"
+            style="padding-top:0">
+        <!-- <view class="cu-progress radius striped active">
           <span>涨</span>
           <view class="bg-red"
                 :style="{width:addRate+'%'}">{{addRate}}%</view>
           <view class="bg-green"
                 :style="{width:reduceRate+'%'}">{{reduceRate}}%</view>
           <span>跌</span>
-        </view>
+        </view> -->
+        <div class="echarts-wrap skeletons-rect">
+          <mpvue-echarts :echarts="echarts"
+                         :onInit="onInit"
+                         canvasId="demo-canvas" />
+        </div>
       </view>
     </section>
     <!-- 排行 -->
@@ -75,7 +81,7 @@
                 :key="sindex">
               <p class="rank-title">{{sign.sSecName}}</p>
               <div class="num-div">
-                <div :class="sign.riceStatus?'c-red':'c-green'"><span :class="sign.riceStatus?'triangleupfill':'icon-triangledownfill'"></span>{{sign.fNow}}</div>
+                <div :class="sign.riceStatus?'c-red':'c-green'"><span :class="sign.riceStatus?'icon-triangleupfill':'icon-triangledownfill'"></span>{{sign.fNow}}</div>
                 <span :class="sign.riceStatus?'c-red':'c-green'">{{sign.riceStatus?'+':''}}{{sign.rice}}</span>
                 <span :class="sign.rateStatus?'c-red':'c-green'">{{sign.rateStatus?'+':''}}{{sign.rate}}%</span>
               </div>
@@ -171,9 +177,103 @@
 <script>
 import { regular, formatTime } from "@/utils/index"
 import { mapMutations } from "vuex"
+import echarts from 'echarts'
+import mpvueEcharts from 'mpvue-echarts'
 
+//echarts
+let chart = null;
+let option = {
+  backgroundColor: 'rgba(0, 0, 0, 0.3)',
+  legend: {
+    bottom: "5",
+    center: '0',
+    textStyle: {
+      color: '#fff',
+      fontSize: 10,
+    },
+    itemWidth: 15,  //图例标记的图形宽度
+    itemHeight: 5, //图例标记的图形高度
+    itemGap: 10
+  },
+  series: [
+    // 中心的圆圈
+    {
+      radius: ['54%', '60%'],
+      center: ['50%', '50%'],
+      type: 'pie',
+      label: {
+        normal: {
+          show: true,
+          textStyle: {
+            color: '#fff',
+            fontSize: 10
+          },
+          formatter: "{b} : {c}"
+        },
+      },
+      labelLine: {
+        normal: {
+          show: true,
+          length: 15,
+          length2: 18
+        }
+      },
+      animation: false,
+      data: [{
+        "name": "涨股数",
+        "value": 95,
+
+      }, {
+        "name": "跌股数",
+        "value": 12,
+
+      }]
+    },
+    {
+      radius: ['38%', '44%'],
+      center: ['50%', '50%'],
+      type: 'pie',
+      label: {
+        normal: {
+          show: true,
+          formatter: "{b} : {c}"
+        },
+        textStyle: {
+          color: '#fff',
+          fontSize: 12
+        }
+      },
+      labelLine: {
+        normal: {
+          show: true
+        }
+      },
+      data: [{
+        "name": "涨公司",
+        "value": 90
+      }, {
+        "name": "跌公司",
+        "value": 10
+      }],
+      animation: false
+    },
+  ]
+}
+function initChart (canvas, width, height) {
+  chart = echarts.init(canvas, null, {
+    width: width,
+    height: height
+  });
+  canvas.setChart(chart);
+  chart.setOption(option);
+
+  return chart; // 返回 chart 后可以自动绑定触摸操作
+}
 export default {
   name: 'market',
+  components: {
+    mpvueEcharts
+  },
   data () {
     return {
       elements: [
@@ -213,7 +313,10 @@ export default {
         'changeList': ''
       },
       addRate: 50,
-      reduceRate: 50
+      reduceRate: 50,
+      chart: '',
+      onInit: initChart,
+      echarts
     }
   },
   onLoad (pageConfig) {
@@ -238,16 +341,32 @@ export default {
       setCode: "SET_CODE",
     }),
     getList () {
+      this.is_capture_nodes = true
       wx.cloud.callFunction({
         name: 'reptile',
         data: { type: 'getMarket' }
       }).then(res => {
-        this.is_capture_nodes = true
         this.dataList = res.result.home ? JSON.parse(res.result.home) : {}
-        let total = parseInt(this.dataList.zdfb_data.znum) + parseInt(this.dataList.zdfb_data.dnum)
-        this.addRate = ((parseInt(this.dataList.zdfb_data.znum) / total) * 100).toFixed(0)
-        this.reduceRate = ((parseInt(this.dataList.zdfb_data.dnum) / total) * 100).toFixed(0)
+        // let total = parseInt(this.dataList.zdfb_data.znum) + parseInt(this.dataList.zdfb_data.dnum)
+        // this.addRate = ((parseInt(this.dataList.zdfb_data.znum) / total) * 100).toFixed(0)
+        // this.reduceRate = ((parseInt(this.dataList.zdfb_data.dnum) / total) * 100).toFixed(0)
         this.is_complete = true
+        //更新echarts
+        option.series[0].data = [{
+          name: '涨股数',
+          value: this.dataList.zdfb_data.znum
+        }, {
+          name: '跌股数',
+          value: this.dataList.zdfb_data.dnum
+        }]
+        option.series[1].data = [{
+          name: '涨停',
+          value: this.dataList.zdt_data.last_zdt.ztzs
+        }, {
+          name: '跌停',
+          value: this.dataList.zdt_data.last_zdt.dtzs
+        }]
+        chart.setOption(option)
       }).catch(error => {
         console.log(error)
       })
@@ -266,7 +385,12 @@ export default {
         data: { type: 'getRankList', action: 'quote', seccode: '0105000001|0005399001|0005399006|2005888001|0005399005|0005399300|0105000016|0105000905|0306IFLX0|0306IHLX0|0306ICLX0' }
       }).then(res => {
         let getData = JSON.parse(res.result.home.content) ? JSON.parse(res.result.home.content).vSecQuote : []
-        getData.forEach(v => {
+        this.rank.page = Math.ceil(getData.length / 6) || 0
+        this.rank.list = getData
+        for (let i = 0; i < this.rank.page; i++) {
+          this.rank.listIndex[i] = this.rank.list.slice(6 * i, (i + 1) * 6)
+        }
+        this.rank.list.forEach(v => {
           let ride = (parseFloat(v.fNow) - parseFloat(v.fClose)) / parseFloat(v.fNow)
           v.rice = (parseFloat(v.fNow) - parseFloat(v.fClose)).toFixed(2)
           v.rate = (ride * 100).toFixed(2)
@@ -274,11 +398,6 @@ export default {
           v.riceStatus = v.rice > 0
           v.rateStatus = v.rate > 0
         })
-        this.rank.page = Math.ceil(getData.length / 6) || 0
-        this.rank.list = getData
-        for (let i = 0; i < this.rank.page; i++) {
-          this.rank.listIndex[i] = this.rank.list.slice(6 * i, (i + 1) * 6)
-        }
       }).catch(error => {
         console.log(error)
       })
@@ -310,21 +429,27 @@ export default {
           sortType: 1
         }
       }
+      let num = 0
       for (let i in this.requestList) {
-        let res = await this.getRankReal(this.requestList[i])
+        num++
+        let res = await this.getRankReal(this.requestList[i], num * 100)
         let result = JSON.parse(res.result.home.content) ? JSON.parse(res.result.home.content).vPlateQuoteDesc : []
-        result.forEach(v => {
+        this.resultList[i] = result
+        this.resultList[i].forEach(v => {
           v.fNow = parseFloat(v.fNow).toFixed(2)
           v.fFhsl = (parseFloat(v.fFhsl) * 100).toFixed(2)
           v.sDtSecCode = v.sDtSecCode.substring(4)
         })
-        this.resultList[i] = result
       }
     },
-    getRankReal (item) {
-      return wx.cloud.callFunction({
-        name: 'reptile',
-        data: { type: 'getRankReal', action: 'quote', ...item }
+    getRankReal (item, num) {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve(wx.cloud.callFunction({
+            name: 'reptile',
+            data: { type: 'getRankReal', action: 'quote', ...item }
+          }))
+        }, num)
       })
     },
     getStockJetton (code) {
@@ -515,6 +640,24 @@ export default {
     align-items: center;
     box-shadow: 0px 4rpx 4rpx 0px rgba(210, 210, 210, 0.75);
     border-radius: 4rpx;
+    background: linear-gradient(
+        to bottom,
+        #d5dee7 0%,
+        #e8ebf2 50%,
+        #e2e7ed 100%
+      ),
+      linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.02) 50%,
+        rgba(255, 255, 255, 0.02) 61%,
+        rgba(0, 0, 0, 0.02) 73%
+      ),
+      linear-gradient(
+        33deg,
+        rgba(255, 255, 255, 0.2) 0%,
+        rgba(0, 0, 0, 0.2) 100%
+      );
+    background-blend-mode: normal, color-burn;
     .rank-title {
       font-size: 18px;
     }
@@ -558,6 +701,10 @@ export default {
 }
 .cu-list + .cu-list {
   margin-top: 0;
+}
+.echarts-wrap {
+  width: 100%;
+  height: 360rpx;
 }
 </style>
 

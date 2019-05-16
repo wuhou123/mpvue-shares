@@ -17,7 +17,8 @@
               :style="{'background-image':imgList[index]}"></div> -->
         <img :src="item"
              class='bg-img shadow-blur'
-             alt="">
+             alt=""
+             @click="goBanner(index)">
       </swiper-item>
     </swiper>
     <!-- 横向tab -->
@@ -37,7 +38,7 @@
     </scroll-view>
     <!-- 推荐 -->
     <section>
-      <div class="cu-card article no-card border-top"
+      <div class="cu-card article no-card border-top skeletons-rect"
            v-for="(item,index) in newsList"
            :key="index"
            @click="goDetail(item)">
@@ -46,7 +47,8 @@
             <div class="text-cut">{{item.resource.title}}</div>
           </div>
           <div class="content">
-            <image :src="item.resource.image_uri"
+            <image :src="item.resource.show?item.resource.image_uri:'/static/logo.png'"
+                   :class="[item.resource.show?'active':'','imgItem'+index]"
                    mode="aspectFill"></image>
             <div class="desc">
               <div class="text-content">{{item.resource.content_short}}</div>
@@ -83,17 +85,22 @@ export default {
       tabList: ['推荐', '精选', '国内', '日历', '股市直播'],
       TabCur: 0,
       scrollLeft: 0,
-      newsList: [],
+      newsList: [{ resource: '' }, { resource: '' }, { resource: '' }, { resource: '' }, { resource: '' }, { resource: '' }],
     }
   },
 
   methods: {
+    goBanner (index) {
+      this.goDetail(index, 'banner')
+    },
     getBanner () {
       const db = wx.cloud.database()
       const banner = db.collection('banner')
+      this.is_capture_nodes = true
       banner.get().then(res => {
         this.imgList = res.data[0].list || []
-      })
+        this.is_complete = true
+      }).catch(error => this.is_complete = true)
     },
     cardSwiper (e) {
       this.cardCur = e.mp.detail.current
@@ -110,30 +117,42 @@ export default {
     getNews () {
       wx.cloud.callFunction({
         name: 'reptile',
-        data: { type: 'getNews', limit: 10, cursor: '', channel: 'wscn-free', accept: 'article,newsroom,morning-report,newsrooms,live,calendar,audition,wits-home-users,hot-themes,vote-interactive,discuss-interactive,ad.internal_banner.inhouse,ad.internal_inline.inhouse,ad.inline.inhouse,ad.video.inhouse,ad.banner.inhouse,ad.inline.plista,ad.banner.plista,ad.topic.inhouse,ad.inline.tanx' }
+        data: { type: 'getNews', limit: 20, cursor: '', channel: 'wscn-free', accept: 'article,newsroom,morning-report,newsrooms,live,calendar,audition,wits-home-users,hot-themes,vote-interactive,discuss-interactive,ad.internal_banner.inhouse,ad.internal_inline.inhouse,ad.inline.inhouse,ad.video.inhouse,ad.banner.inhouse,ad.inline.plista,ad.banner.plista,ad.topic.inhouse,ad.inline.tanx' }
       }).then(res => {
-        this.is_capture_nodes = true
         let data = res.result.home.data.items || []
         this.newsList = data
-        this.is_complete = true
+        this.newsList.forEach((v, i) => v.resource.show = i <= 1)
+        //图片懒加载
+        this.getLazyImg()
       }).catch(error => {
-        this.is_complete = true
         console.log(error)
       })
     },
-    goDetail (item) {
-      let url = "../details/main?id=" + item.resource.id
+    goDetail (item, type) {
+      let url;
+      if (type === 'banner') {
+        url = `../details/main?type=${type}&id=${item}`
+      } else url = "../details/main?id=" + item.resource.id
       wx.navigateTo({ url })
+    },
+    getLazyImg () {
+      setTimeout(() => {
+        for (let i in this.newsList) {
+          let className = `.imgItem${i}`
+          wx.createIntersectionObserver().relativeToViewport({ bottom: 20 }).observe(className, (result) => {
+            console.log(className)
+            if (result.intersectionRatio > 0) {
+              this.newsList[i].resource.show = true
+            }
+          })
+        }
+      }, 2000)
     }
   },
   onLoad () {
     this.getBanner()
     this.getNews()
-  },
-  async onPullDownRefresh () { },
-
-  // 上拉加载，拉到底部触发
-  onReachBottom () { }
+  }
 };
 </script>
 
@@ -189,7 +208,13 @@ export default {
 .border-top {
   border-top: 1px solid #e8e8e8;
 }
-.cu-load.load-modal {
-  box-shadow: ;
+.content {
+  image {
+    transition: all 0.3s ease;
+    opacity: 0;
+  }
+  .active {
+    opacity: 1;
+  }
 }
 </style>

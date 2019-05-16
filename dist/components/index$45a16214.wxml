@@ -1,33 +1,3 @@
-<template name="index$45a16214">
-  <view class="_div data-v-51a5663d container skeletons">
-    <swiper class="_swiper data-v-51a5663d card-swiper square-dot skeletons-rect" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500" bindchange="handleProxy" indicator-color="#8799a3" indicator-active-color="#0081ff" hidden="{{!(is_complete)}}"
-      data-eventid="{{'0'}}" data-comkey="{{$k}}">
-      <swiper-item wx:key="index" key="{{index}}" wx:for="{{imgList}}" wx:for-index="index" wx:for-item="item" class="_swiper-item data-v-51a5663d {{cardCur == index ? 'cur' : ''}}">
-        <image src="{{item}}" class="_img data-v-51a5663d bg-img shadow-blur" alt></image>
-      </swiper-item>
-    </swiper>
-    <scroll-view scroll-x class="_scroll-view data-v-51a5663d bg-white nav css-sticky" hidden="{{!(is_complete)}}">
-      <view class="_div data-v-51a5663d flex text-center skeletons-rect">
-        <view class="_div data-v-51a5663d cu-item flex-sub {{index == TabCur ? 'text-orange cur' : ''}}" wx:key="index" key="{{index}}" bindtap="handleProxy" data-id="{{index}}" data-eventid="{{'1-'+index}}" data-comkey="{{$k}}" wx:for="{{tabList}}" wx:for-index="index"
-          wx:for-item="item"> {{item}} </view>
-      </view>
-    </scroll-view>
-    <view class="_section data-v-51a5663d">
-      <view class="_div data-v-51a5663d cu-card article no-card border-top" wx:key="index" key="{{index}}" bindtap="handleProxy" data-eventid="{{'2-'+index}}" data-comkey="{{$k}}" wx:for="{{newsList}}" wx:for-index="index" wx:for-item="item">
-        <view class="_div data-v-51a5663d cu-item shadow">
-          <view class="_div data-v-51a5663d title">
-            <view class="_div data-v-51a5663d text-cut">{{item.resource.title}}</view>
-          </view>
-          <view class="_div data-v-51a5663d content">
-            <image src="{{item.resource.image_uri}}" mode="aspectFill" class="_image data-v-51a5663d"></image>
-            <view class="_div data-v-51a5663d desc">
-              <view class="_div data-v-51a5663d text-content">{{item.resource.content_short}}</view>
-              <view class="_div data-v-51a5663d"></view>
-            </view>
-          </view>
-        </view>
-      </view>
-    </view>
-    <skeletons is_capture_nodes="{{is_capture_nodes}}" is_complete="{{is_complete}}" loading="music" block_animation="shine" selector="skeletons" background="#fff" class="_skeletons data-v-51a5663d"></skeletons>
-  </view>
-</template>
+<template name="index$45a16214"><view class="_div data-v-51a5663d container skeletons"><swiper class="_swiper data-v-51a5663d card-swiper square-dot skeletons-rect" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500" bindchange="handleProxy" indicator-color="#8799a3" indicator-active-color="#0081ff" hidden="{{!(is_complete)}}" data-eventid="{{'1'}}" data-comkey="{{$k}}"><swiper-item wx:key="index" key="{{index}}" wx:for="{{imgList}}" wx:for-index="index" wx:for-item="item" class="_swiper-item data-v-51a5663d {{cardCur == index ? 'cur' : ''}}"><image src="{{item}}" class="_img data-v-51a5663d bg-img shadow-blur" alt bindtap="handleProxy" data-eventid="{{'0-'+index}}" data-comkey="{{$k}}"></image></swiper-item></swiper> <scroll-view scroll-x class="_scroll-view data-v-51a5663d bg-white nav css-sticky" hidden="{{!(is_complete)}}"><view class="_div data-v-51a5663d flex text-center skeletons-rect"><view class="_div data-v-51a5663d cu-item flex-sub {{index == TabCur ? 'text-orange cur' : ''}}" wx:key="index" key="{{index}}" bindtap="handleProxy" data-id="{{index}}" data-eventid="{{'2-'+index}}" data-comkey="{{$k}}" wx:for="{{tabList}}" wx:for-index="index" wx:for-item="item">
+        {{item}}
+      </view></view></scroll-view> <view class="_section data-v-51a5663d"><view class="_div data-v-51a5663d cu-card article no-card border-top skeletons-rect" wx:key="index" key="{{index}}" bindtap="handleProxy" data-eventid="{{'3-'+index}}" data-comkey="{{$k}}" wx:for="{{newsList}}" wx:for-index="index" wx:for-item="item"><view class="_div data-v-51a5663d cu-item shadow"><view class="_div data-v-51a5663d title"><view class="_div data-v-51a5663d text-cut">{{item.resource.title}}</view></view> <view class="_div data-v-51a5663d content"><image src="{{item.resource.show?item.resource.image_uri:'/static/logo.png'}}" mode="aspectFill" class="_image data-v-51a5663d {{[item.resource.show ? 'active' : '', 'imgItem' + index]}}"></image> <view class="_div data-v-51a5663d desc"><view class="_div data-v-51a5663d text-content">{{item.resource.content_short}}</view> <view class="_div data-v-51a5663d"></view></view></view></view></view></view> <skeletons is_capture_nodes="{{is_capture_nodes}}" is_complete="{{is_complete}}" loading="music" block_animation="shine" selector="skeletons" background="#fff" class="_skeletons data-v-51a5663d"></skeletons></view></template>
