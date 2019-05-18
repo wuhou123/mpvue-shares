@@ -15,16 +15,18 @@
                    :class="cardCur==index?'cur':''">
         <!-- <div class='bg-img shadow-blur'
               :style="{'background-image':imgList[index]}"></div> -->
-        <img :src="item"
-             class='bg-img shadow-blur'
-             alt=""
-             @click="goBanner(index)">
+        <image :src="item"
+               class='bg-img shadow-blur set-bg'
+               :class="'set-bg'+index"
+               alt=""
+               mode="aspectFit"
+               @click="goBanner(index)"></image>
       </swiper-item>
     </swiper>
     <!-- 横向tab -->
     <scroll-view scroll-x
                  class="bg-white nav css-sticky"
-                 v-show="is_complete">
+                 v-show="is_complete&&imgList.length!==3">
       <div class="flex text-center skeletons-rect">
         <div class="cu-item flex-sub"
              :class="index==TabCur?'text-orange cur':''"
@@ -37,7 +39,7 @@
       </div>
     </scroll-view>
     <!-- 推荐 -->
-    <section>
+    <section v-if="imgList.length!==3">
       <div class="cu-card article no-card border-top skeletons-rect"
            v-for="(item,index) in newsList"
            :key="index"
@@ -60,6 +62,24 @@
         </div>
       </div>
     </section>
+    <section v-else>
+      <view class="cu-bar bg-white solid-bottom">
+        <view class="action">
+          <text class='icon-title text-blue'></text>主要信息
+        </view>
+      </view>
+      <view class="grid col-3 padding-sm">
+        <view class="padding-sm"
+              v-for="(item,index) in ColorList"
+              :key="index">
+          <view class="padding radius text-center shadow-blur"
+                :class="'bg-' + item.name">
+            <view class="text-lg">{{item.title}}</view>
+            <view class="margin-top-sm text-Abc">{{item.value}}</view>
+          </view>
+        </view>
+      </view>
+    </section>
 
     <skeletons :is_capture_nodes="is_capture_nodes"
                :is_complete="is_complete"
@@ -76,6 +96,43 @@ import Request from "@/api/allApi"
 export default {
   data () {
     return {
+      ColorList: [{
+        title: '黄金价格',
+        name: 'red',
+        color: '#e54d42',
+        value: '287.2'
+      },
+      {
+        title: '港币汇率',
+        name: 'orange',
+        color: '#f37b1d',
+        value: '0.8809'
+      },
+      {
+        title: '上证指数',
+        name: 'yellow',
+        color: '#fbbd08',
+        value: '2882.30'
+      },
+      {
+        title: '深圳房价',
+        name: 'olive',
+        color: '#8dc63f',
+        value: '58563'
+      },
+      {
+        title: '比特币',
+        name: 'green',
+        color: '#39b54a',
+        value: '7319.80'
+      },
+      {
+        title: '人民币',
+        name: 'cyan',
+        color: '#1cbbb4',
+        value: '6.9483'
+      }],
+      dateData: [],
       is_capture_nodes: false,
       is_complete: false,
       listData: [],
@@ -91,6 +148,7 @@ export default {
 
   methods: {
     goBanner (index) {
+      if (this.imgList.length === 3) return
       this.goDetail(index, 'banner')
     },
     getBanner () {
@@ -140,7 +198,7 @@ export default {
         for (let i in this.newsList) {
           let className = `.imgItem${i}`
           wx.createIntersectionObserver().relativeToViewport({ bottom: 20 }).observe(className, (result) => {
-            console.log(className)
+            // console.log(className)
             if (result.intersectionRatio > 0) {
               this.newsList[i].resource.show = true
             }
@@ -216,5 +274,11 @@ export default {
   .active {
     opacity: 1;
   }
+}
+.set-bg0 {
+  background-image: linear-gradient(to top, #fbc2eb 0%, #a6c1ee 100%);
+}
+.set-bg1 {
+  background-image: linear-gradient(to top, #accbee 0%, #e7f0fd 100%);
 }
 </style>

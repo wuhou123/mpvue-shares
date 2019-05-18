@@ -40,7 +40,7 @@ module.exports = {
         })
         .catch(error => {
           console.log(error)
-          reject('获取股市日历失败！')
+          reject('获取韭菜日历失败！')
         })
     })
   },

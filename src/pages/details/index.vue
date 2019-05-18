@@ -29,7 +29,8 @@ export default {
       is_capture_nodes: false,
       is_complete: false,
       CustomBar: 0,
-      loadProgress: 0
+      loadProgress: 0,
+      timer: ''
     };
   },
   onLoad (options) {
@@ -64,13 +65,12 @@ export default {
     },
     LoadProgress (e) {
       this.loadProgress = this.loadProgress + 3;
-      let timer;
       if (this.loadProgress < 100) {
-        timer = setTimeout(() => {
+        this.timer = setTimeout(() => {
           this.LoadProgress();
         }, 100)
       } else {
-        clearTimeout(timer)
+        clearTimeout(this.timer)
         this.loadProgress = 0;
       }
     }

@@ -23,11 +23,11 @@
     </scroll-view>
     <!-- 概况 -->
     <section v-show="TabCur==0">
-      <!-- <div class="cu-bar bg-white solid-bottom skeletons-rect">
+      <div class="cu-bar bg-white solid-bottom skeletons-rect">
         <div class='action'>
           <p class='icon-titles text-orange '></p> 概况
         </div>
-      </div> -->
+      </div>
       <div class='nav-list margin-top'
            v-if="TabCur==0">
         <div class="nav-li skeletons-rect"
@@ -183,32 +183,25 @@ import mpvueEcharts from 'mpvue-echarts'
 //echarts
 let chart = null;
 let option = {
-  backgroundColor: 'rgba(0, 0, 0, 0.3)',
+  backgroundColor: '#fff',
   legend: {
-    bottom: "5",
+    bottom: "0",
     center: '0',
-    textStyle: {
-      color: '#fff',
-      fontSize: 10,
-    },
     itemWidth: 15,  //图例标记的图形宽度
     itemHeight: 5, //图例标记的图形高度
-    itemGap: 10
+    itemGap: 10,
+    selectedMode: false
   },
   series: [
     // 中心的圆圈
     {
-      radius: ['54%', '60%'],
+      radius: ['52%', '60%'],
       center: ['50%', '50%'],
       type: 'pie',
       label: {
         normal: {
           show: true,
-          textStyle: {
-            color: '#fff',
-            fontSize: 10
-          },
-          formatter: "{b} : {c}"
+          formatter: "{b} : {c}家"
         },
       },
       labelLine: {
@@ -218,7 +211,8 @@ let option = {
           length2: 18
         }
       },
-      animation: false,
+      hoverAnimation: false,
+      silent: true,
       data: [{
         "name": "涨股数",
         "value": 95,
@@ -230,17 +224,13 @@ let option = {
       }]
     },
     {
-      radius: ['38%', '44%'],
+      radius: '44%',
       center: ['50%', '50%'],
       type: 'pie',
       label: {
         normal: {
           show: true,
-          formatter: "{b} : {c}"
-        },
-        textStyle: {
-          color: '#fff',
-          fontSize: 12
+          formatter: "{b} : {c}支"
         }
       },
       labelLine: {
@@ -249,13 +239,17 @@ let option = {
         }
       },
       data: [{
-        "name": "涨公司",
-        "value": 90
+        name: "涨公司",
+        value: 90,
+        selected: true
       }, {
-        "name": "跌公司",
-        "value": 10
+        name: "跌公司",
+        value: 10
       }],
-      animation: false
+      hoverAnimation: false,
+      silent: true,
+      selectedMode: 'single',
+      selectedOffset: 3
     },
   ]
 }
@@ -361,7 +355,8 @@ export default {
         }]
         option.series[1].data = [{
           name: '涨停',
-          value: this.dataList.zdt_data.last_zdt.ztzs
+          value: this.dataList.zdt_data.last_zdt.ztzs,
+          selected: true
         }, {
           name: '跌停',
           value: this.dataList.zdt_data.last_zdt.dtzs

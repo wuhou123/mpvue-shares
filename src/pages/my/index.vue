@@ -53,7 +53,7 @@
         </div>
       </div>
     </div>
-    <div class="radius shadow-blur">
+    <div class="radius shadow-blur margin1">
       <image src="https://image.weilanwl.com/gif/wave.gif"
              mode="scaleToFill"
              class="gif-blue response"
@@ -66,9 +66,6 @@
 import Request from '@/api/allApi'
 import { RandomNum, formatDate } from "@/utils/index"
 import WXBizDataCrypt from '@/utils/RdWXBizDataCrypt'
-//音频
-const innerAudioContext = wx.createInnerAudioContext();
-innerAudioContext.src = 'https://www.wuhou123.cn/coin.mp3';
 
 export default {
   data () {
@@ -90,6 +87,7 @@ export default {
       },
       isAni: false,
       openid: '',
+      audio: ''
     }
   },
 
@@ -100,6 +98,9 @@ export default {
       this.CoinList[index].opacity = 0
       this.ShopShakeType = true
       this.isAni = true
+      //播放音频
+      this.audio.seek(0)
+      this.audio.play()
       //金币提交
       this.ExpectData.currency++
       this.ExpectData.total++
@@ -111,8 +112,6 @@ export default {
           this.CoinList[index].showType = false
         })
       }, 500)
-      innerAudioContext.seek(0)
-      innerAudioContext.play()
     },
     CoinsRender (CoinAry) {
       const _this = this
@@ -256,7 +255,17 @@ export default {
       })
     }
   },
-
+  onLoad () {
+    //音频
+    let res = wx.getSystemInfoSync()
+    if (res.platform == 'ios') {
+      this.audio = wx.getBackgroundAudioManager()
+    } else {
+      this.audio = wx.createInnerAudioContext();
+    }
+    this.audio.title = "音乐文件"
+    this.audio.src = "https://www.wuhou123.cn/coin.mp3"
+  },
   mounted () {
     this.CoinsRender()
     this.getRunData()
@@ -960,5 +969,8 @@ export default {
       transform: translateY(0rpx);
     }
   }
+}
+.margin1 {
+  margin-top: -1px;
 }
 </style>
