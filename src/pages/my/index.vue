@@ -12,33 +12,37 @@
     </div>
     <div class="cu-bar bg-white solid-bottom">
       <div class='action'>
-        <text class='icon-titles text-orange'></text> 越运动越幸运
+        <text class='icon-titles text-orange'></text>{{title}}
       </div>
     </div>
     <!--金币-->
-    <div class="coin-cont">
+    <div class="coin-cont"
+         :style="{height:imgList.length!=3?'500rpx':'200rpx'}">
       <!-- 左上角区域==== -->
-      <view class="todayRunData">
-        <view class="todayData">
+      <div class="todayRunData"
+           v-if="imgList.length!=3">
+        <div class="todayData">
           <text>今日步数</text>
-          <view class="todaywalk">{{ExpectData.TodayWalk}}</view>
-        </view>
-      </view>
+          <div class="todaywalk">{{ExpectData.TodayWalk}}</div>
+        </div>
+      </div>
       <!-- 右上角区域==== -->
-      <view class="recordCont"
-            :style="{'animation-name':isAni?'mymoves':''}">
-        <view class="collect">
-          <view class="coinRecord">
-            <view class="CLeft">
+      <div class="recordCont"
+           :style="{'animation-name':isAni?'mymoves':''}"
+           v-if="imgList.length!=3">
+        <div class="collect">
+          <div class="coinRecord">
+            <div class="CLeft">
               <image src="../../static/imgs/coinRecord.png"></image>
               <text class="record">股运</text>
-            </view>
+            </div>
             <text class="moneyCount">{{ExpectData.total}}</text>
-          </view>
-        </view>
-      </view>
+          </div>
+        </div>
+      </div>
       <div class="coin-bg"
-           :style="{'animation-name':ShopShakeType?'mymoves':''}">
+           :style="{'animation-name':ShopShakeType?'mymoves':''}"
+           v-if="imgList.length!=3">
       </div>
       <div v-for="(v,index) in CoinList"
            :key="index">
@@ -53,11 +57,47 @@
         </div>
       </div>
     </div>
-    <div class="radius shadow-blur margin1">
+    <div class="radius shadow-blur margin1 bg-white">
       <image src="https://image.weilanwl.com/gif/wave.gif"
              mode="scaleToFill"
              class="gif-blue response"
              style="height:100rpx"></image>
+    </div>
+    <!-- 列表 -->
+    <div class="cu-list menu margin1">
+      <div class="cu-item arrow"
+           @click="modalName='Image'">
+        <div class="content">
+          <text class="icon-circlefill text-grey"></text>
+          <text class="text-grey">关于</text>
+        </div>
+      </div>
+      <div class="cu-item arrow">
+        <button class="cu-btn content"
+                open-type="feedback">
+          <text class="icon-btn text-olive"></text>
+          <text class="text-grey">意见反馈</text>
+        </button>
+      </div>
+    </div>
+    <div class="cu-modal"
+         :class="modalName=='Image'?'show':''">
+      <div class="cu-dialog">
+        <div class="bg-img"
+             style="background-image: url('https://ossweb-img.qq.com/images/lol/web201310/skin/big91012.jpg');height:200px;">
+          <div class="cu-bar justify-end text-white">
+            <div class="action"
+                 @tap="hideModal">
+              <text class="icon-close "></text>
+            </div>
+          </div>
+          <text class="text-white">一个韭菜的自我成长之路！</text>
+        </div>
+        <div class="cu-bar bg-white">
+          <div class="action margin-0 flex-sub  solid-left"
+               @tap="hideModal">我知道了</div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -87,11 +127,17 @@ export default {
       },
       isAni: false,
       openid: '',
-      audio: ''
+      audio: '',
+      title: '越运动越幸运',
+      imgList: [],
+      modalName: null
     }
   },
 
   methods: {
+    hideModal () {
+      this.modalName = null
+    },
     CoinClick (v, index) {
       this.CoinList[index].translateY = `-${this.CoinList[index].top / 2}`
       this.CoinList[index].translateX = `${this.CoinList[index].right - 180}`
@@ -258,18 +304,22 @@ export default {
   onLoad () {
     //音频
     let res = wx.getSystemInfoSync()
-    if (res.platform == 'ios') {
-      this.audio = wx.getBackgroundAudioManager()
-    } else {
-      this.audio = wx.createInnerAudioContext();
-    }
+    this.audio = wx.createInnerAudioContext()
     this.audio.title = "音乐文件"
     this.audio.src = "https://www.wuhou123.cn/coin.mp3"
+    //控制显示
+    const db = wx.cloud.database()
+    const banner = db.collection('banner')
+    banner.get().then(res => {
+      this.imgList = res.data[0].list || []
+      if (this.imgList.length === 3) this.title = '关于'
+      else {
+        this.CoinsRender()
+        this.getRunData()
+      }
+    }).catch(error => console.log(error))
   },
-  mounted () {
-    this.CoinsRender()
-    this.getRunData()
-  }
+  mounted () { }
 
 }
 </script>
@@ -279,6 +329,7 @@ export default {
 @marginLeft12: 12rpx;
 
 .user-center {
+  overflow-x: hidden;
   &-top {
     .user-settings {
       padding: 16px 24px;
@@ -375,7 +426,6 @@ export default {
   // 预留头部容器位置
   // padding-top: 80rpx;
   // padding-bottom: 150rpx;
-  height: 500rpx;
   width: 100%;
   position: relative;
   // background-image: linear-gradient(
@@ -971,6 +1021,6 @@ export default {
   }
 }
 .margin1 {
-  margin-top: -1px;
+  margin-top: -7rpx;
 }
 </style>

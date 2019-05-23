@@ -2,7 +2,8 @@
   <div class="container">
     <!-- 横向tab -->
     <scroll-view scroll-x
-                 class="bg-white nav">
+                 class="bg-white nav"
+                 v-if="imgList.length!==3">
       <div class="flex text-center css-absolute">
         <div class="cu-item flex-sub"
              :class="index==TabCur?'text-orange cur':''"
@@ -15,7 +16,7 @@
     </scroll-view>
     <!-- 推荐 -->
     <scroll-view scroll-y>
-      <section v-show="TabCur===0||TabCur===1||TabCur===2">
+      <section v-show="(TabCur===0||TabCur===1||TabCur===2)&&imgList.length!==3">
         <div class="cu-card article no-card border-top"
              v-for="(item,index) in newsList[TabCur]"
              :key="index"
@@ -40,7 +41,7 @@
     </scroll-view>
 
     <!-- 日历 -->
-    <section v-if="TabCur===3">
+    <section v-if="TabCur===3&&imgList.length!==3">
       <div class="cu-timeline"
            v-for="(item,index) in listData"
            :key="index">
@@ -73,7 +74,7 @@
       </section>
     </section>
     <!-- 直播 -->
-    <section v-if="TabCur===4">
+    <section v-if="TabCur===4&&imgList.length!==3">
       <div class="cu-timeline"
            v-for="(item,index) in liveList"
            :key="index">
@@ -87,6 +88,11 @@
                @click="searchTo(item.Stocks[0].Symbol)">{{item.Stocks[0].Name}}</div>
         </div>
       </div>
+    </section>
+    <section v-if="imgList.length==3">
+      <view class='text-lg padding bg-white radius text-center'>
+        <text class='text-grey text-center'>暂无消息！</text>
+      </view>
     </section>
     <!-- loading -->
     <div class="cu-load load-modal"
@@ -111,7 +117,8 @@ export default {
       loadModal: false,
       newsList: [],
       listData: [],
-      liveList: []
+      liveList: [],
+      imgList: [1, 2, 3]
     }
   },
 
@@ -231,6 +238,13 @@ export default {
   onLoad (pageConfig) {
     this.TabCur = parseInt(pageConfig.tabCur) || 0
     this.tabSelect(this.TabCur)
+    //初始化
+    const db = wx.cloud.database()
+    const banner = db.collection('banner')
+    banner.get().then(res => {
+      this.imgList = []
+      this.imgList = res.data[0].list || []
+    }).catch(error => console.log(error))
   },
   onPageScroll () {
 

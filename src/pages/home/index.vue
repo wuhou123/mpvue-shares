@@ -9,7 +9,7 @@
             @change="cardSwiper"
             indicator-color="#8799a3"
             indicator-active-color="#0081ff"
-            v-show="is_complete">
+            v-show="is_complete&&imgList.length!==3">
       <swiper-item v-for="(item,index) in imgList"
                    :key="index"
                    :class="cardCur==index?'cur':''">
@@ -49,7 +49,7 @@
             <div class="text-cut">{{item.resource.title}}</div>
           </div>
           <div class="content">
-            <image :src="item.resource.show?item.resource.image_uri:'/static/logo.png'"
+            <image :src="item.resource.show?item.resource.image_uri:'https://image.weilanwl.com/gif/wave.gif'"
                    :class="[item.resource.show?'active':'','imgItem'+index]"
                    mode="aspectFill"></image>
             <div class="desc">
@@ -65,17 +65,23 @@
     <section v-else>
       <view class="cu-bar bg-white solid-bottom">
         <view class="action">
-          <text class='icon-title text-blue'></text>主要信息
+          <text class='icon-title text-blue'></text>今日
         </view>
       </view>
       <view class="grid col-3 padding-sm">
-        <view class="padding-sm"
-              v-for="(item,index) in ColorList"
+      </view>
+      <view class='dailyForecast'>
+        <view v-for="(item,index) in futureWeather"
+              style="display: block;"
               :key="index">
-          <view class="padding radius text-center shadow-blur"
-                :class="'bg-' + item.name">
-            <view class="text-lg">{{item.title}}</view>
-            <view class="margin-top-sm text-Abc">{{item.value}}</view>
+          <view class='daily'
+                style="flex-direction:row;">
+            <view class='dailyDate'>{{item.date}}</view>
+            <image class='dailyImg'
+                   :src='item.dayPictureUrl'
+                   mode='aspectFit' />
+            <view class='dailyCond'>{{item.weather}}</view>
+            <view class='dailyTmp'>{{item.temperature}}</view>
           </view>
         </view>
       </view>
@@ -92,10 +98,12 @@
 
 <script>
 import Request from "@/api/allApi"
+import bmap from '@/utils/bmap-wx.min.js'
 
 export default {
   data () {
     return {
+      futureWeather: [],
       ColorList: [{
         title: '黄金价格',
         name: 'red',
@@ -109,28 +117,10 @@ export default {
         value: '0.8809'
       },
       {
-        title: '上证指数',
-        name: 'yellow',
-        color: '#fbbd08',
-        value: '2882.30'
-      },
-      {
         title: '深圳房价',
         name: 'olive',
         color: '#8dc63f',
         value: '58563'
-      },
-      {
-        title: '比特币',
-        name: 'green',
-        color: '#39b54a',
-        value: '7319.80'
-      },
-      {
-        title: '人民币',
-        name: 'cyan',
-        color: '#1cbbb4',
-        value: '6.9483'
       }],
       dateData: [],
       is_capture_nodes: false,
@@ -144,6 +134,7 @@ export default {
       scrollLeft: 0,
       newsList: [{ resource: '' }, { resource: '' }, { resource: '' }, { resource: '' }, { resource: '' }, { resource: '' }],
     }
+
   },
 
   methods: {
@@ -157,6 +148,7 @@ export default {
       this.is_capture_nodes = true
       banner.get().then(res => {
         this.imgList = res.data[0].list || []
+        if (this.imgList.length === 3) this.loadWeather()
         this.is_complete = true
       }).catch(error => this.is_complete = true)
     },
@@ -205,6 +197,33 @@ export default {
           })
         }
       }, 2000)
+    },
+    loadWeather () {
+      let _this = this
+      // 新建百度地图对象
+      let BMap = new bmap({
+        ak: 'gGpLpLOSIGme81xiRacyTc5VWxfY3Gka'
+      })
+      let fail = function (data) {
+        console.log(data)
+      }
+      let success = function (data) {
+        console.log('jinru', data)
+        let futureWeather = data.originalData.results[0].weather_data
+        _this.futureWeather = futureWeather
+        _this.futureWeather[0].date = '今天'
+      }
+      // 发起weather请求
+      BMap.weather({
+        fail: fail,
+        success: success
+      })
+      BMap.regeocoding({
+        fail: function (res) {
+          console.log(res)
+        },
+        success: function (res) { }
+      })
     }
   },
   onLoad () {
@@ -269,7 +288,7 @@ export default {
 .content {
   image {
     transition: all 0.3s ease;
-    opacity: 0;
+    opacity: 0.3;
   }
   .active {
     opacity: 1;
@@ -280,5 +299,38 @@ export default {
 }
 .set-bg1 {
   background-image: linear-gradient(to top, #accbee 0%, #e7f0fd 100%);
+}
+//天气
+.daily {
+  display: flex;
+  align-items: center;
+  height: 80rpx;
+  background-color: white;
+  text-align: center;
+}
+.dailyDate {
+  text-align: left;
+  width: 25%;
+  color: #4b4b4b;
+  font-size: 30rpx;
+  margin-left: 5%;
+}
+.dailyImg {
+  margin-left: 100rpx;
+  margin-right: 40rpx;
+  width: 64rpx;
+  height: 80%;
+}
+.dailyCond {
+  text-align: left;
+  width: 40%;
+  color: #4b4b4b;
+  font-size: 30rpx;
+}
+.dailyTmp {
+  text-align: center;
+  width: 40%;
+  font-size: 30rpx;
+  font-family: "PingFangSC-Semibold";
 }
 </style>

@@ -5,20 +5,22 @@
       <div class="cu-item"
            :class="0==TabCur?'text-white cur':''"
            @tap='tabSelect(0)'
-           data-id="0">
+           data-id="0"
+           v-if="imgList.length!==3">
         <text class='icon-newsfill css-color-e8'></text> 沪深概况
       </div>
       <div class="cu-item"
            :class="1==TabCur?'text-white cur':''"
            @tap='tabSelect(1)'
-           data-id="1">
+           data-id="1"
+           v-if="imgList.length!==3">
         <text class='icon-rank css-color-e8'></text> 排行榜
       </div>
       <div class="cu-item"
            :class="2==TabCur?'text-white cur':''"
            @tap='tabSelect(2)'
            data-id="2">
-        <text class='icon-servicefill css-color-e8'></text> 诊股
+        <text class='icon-servicefill css-color-e8'></text> 查询
       </div>
     </scroll-view>
     <!-- 概况 -->
@@ -124,20 +126,20 @@
         <div class='search-form round'>
           <text class="icon-search"></text>
           <input type="text"
-                 placeholder="输入股票代码"
+                 placeholder="输入代码"
                  v-model="inputVal"
                  confirm-type="search" />
         </div>
         <div class='action'>
           <button class='cu-btn bg-green shadow-blur round'
-                  @click="getSearch">诊股</button>
+                  @click="getSearch">查询</button>
         </div>
       </div>
       <view class="cu-card dynamic">
         <view class="cu-item shadow">
           <view class="cu-bar bg-white solid-bottom">
             <view class='action'>
-              <text class='icon-titles text-orange '></text> 资金动向
+              <text class='icon-titles text-orange '></text> 动向
             </view>
           </view>
           <view class='text-content'>
@@ -148,7 +150,7 @@
           </view>
           <view class="cu-bar bg-white solid-bottom">
             <view class='action'>
-              <text class='icon-titles text-orange '></text> 整体趋势
+              <text class='icon-titles text-orange'></text> 整体趋势
             </view>
           </view>
           <div class="text-content">
@@ -310,7 +312,8 @@ export default {
       reduceRate: 50,
       chart: '',
       onInit: initChart,
-      echarts
+      echarts,
+      imgList: []
     }
   },
   onLoad (pageConfig) {
@@ -321,6 +324,15 @@ export default {
         iconfont: `icon-${v.icon}`
       })
     })
+    const db = wx.cloud.database()
+    const banner = db.collection('banner')
+    banner.get().then(res => {
+      this.imgList = res.data[0].list || []
+      if (this.imgList.length == 3) {
+        this.inputVal = '2019-05-22'
+        this.TabCur = 2
+      }
+    }).catch(error => console.log(error))
   },
   onShow () {
     let id = this.$store.state.code || ''
@@ -371,6 +383,13 @@ export default {
       if (index == 1) this.getRankList()
     },
     getSearch () {
+      if (this.inputVal === '2019-05-22') {
+        this.jettons = ['今日天气晴朗,阳光普照！']
+        this.trendData = '长势喜人'
+      } else if (this.inputVal.includes('-')) {
+        this.jettons = ['暂无数据，试试查查今日！']
+        this.trendData = '暂无数据，试试查查今日！'
+      }
       this.getStockJetton(this.inputVal)
     },
     getRankList () {

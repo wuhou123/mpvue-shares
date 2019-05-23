@@ -6,7 +6,7 @@ app.$mount()
 
 export default {
   config: {
-    navigationBarTitleText: '韭菜论',
+    navigationBarTitleText: '韭菜日历',
     usingComponents: {
       skeletons: '/static/components/component/skeletons/index'
     }

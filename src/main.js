@@ -36,13 +36,13 @@ export default {
       backgroundColor: '#fff',
       list: [
         {
-          text: '直播',
+          text: '韭菜日历',
           pagePath: 'pages/home/main',
           iconPath: 'static/icon/home.png',
           selectedIconPath: 'static/icon/home_focus.png'
         },
         {
-          text: '行情',
+          text: '查询',
           pagePath: 'pages/market/main',
           iconPath: 'static/icon/invest.png',
           selectedIconPath: 'static/icon/invest_focus.png'
@@ -54,6 +54,11 @@ export default {
           selectedIconPath: 'static/icon/my_focus.png'
         }
       ]
+    },
+    permission: {
+      'scope.userLocation': {
+        desc: '你的位置信息将用于小程序位置接口的效果展示'
+      }
     }
   }
 }
