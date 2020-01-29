@@ -1,21 +1,29 @@
 {
 	"description": "项目配置文件。",
 	"setting": {
-		"urlCheck": true,
+		"urlCheck": false,
 		"es6": false,
 		"postcss": true,
 		"minified": true,
 		"newFeature": true,
+		"coverView": true,
 		"autoAudits": false,
-		"checkInvalidKey": true
+		"checkInvalidKey": true,
+		"checkSiteMap": true,
+		"uploadWithSourceMap": true,
+		"babelSetting": {
+			"ignore": [],
+			"disablePlugins": [],
+			"outputPath": ""
+		}
 	},
-	"miniprogramRoot": "dist/",
+	"miniprogramRoot": "dist/wx/",
 	"compileType": "miniprogram",
-	"appid": "wx64b1735b4eb0b71d",
-	"projectname": "wx-shares",
-	"cloudfunctionRoot": "cloudfunctions/",
+	"appid": "wxedd4ffdcf6f8d1c1",
+	"projectname": "cus-mini-app",
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
+	"libVersion": "2.8.0",
 	"condition": {
 		"search": {
 			"current": -1,
@@ -33,20 +41,123 @@
 			"currentL": -1,
 			"list": []
 		},
+		"gamePlugin": {
+			"current": -1,
+			"list": []
+		},
 		"miniprogram": {
-			"current": 1,
+			"current": 12,
 			"list": [
 				{
-					"id": -1,
-					"name": "news",
-					"pathName": "pages/news/main",
+					"id": 0,
+					"name": "pages/expressDetail",
+					"pathName": "pages/expressDetail",
+					"query": "orderNo=123",
+					"scene": null
+				},
+				{
+					"id": 1,
+					"name": "pages/work",
+					"pathName": "pages/work",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 2,
+					"name": "pages/address",
+					"pathName": "pages/address",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 3,
+					"name": "pages/servicePrice",
+					"pathName": "pages/servicePrice",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 4,
+					"name": "pages/index",
+					"pathName": "pages/index",
 					"query": "",
 					"scene": null
 				},
 				{
 					"id": -1,
-					"name": "details",
-					"pathName": "pages/details/main",
+					"name": "login",
+					"pathName": "pages/login",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/storageQuery",
+					"pathName": "pages/storageQuery",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/expressDetail/temForMap/index",
+					"pathName": "pages/expressDetail/temForMap/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/searchDetail/searchTmpMap",
+					"pathName": "pages/searchDetail/searchTmpMap",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/work/inboundsWithTrunk",
+					"pathName": "pages/work/inboundsWithTrunk",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 10,
+					"name": "pages/work/inboundsDetail",
+					"pathName": "pages/work/inboundsDetail",
+					"query": "order_no=234体验4321&customer_id=1100000031",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/search",
+					"pathName": "pages/search",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/work/transfer",
+					"pathName": "pages/work/transfer",
+					"query": "order_no=12345&customer_id=1100000033",
+					"scene": null
+				},
+				{
+					"id": 13,
+					"name": "pages/searchDetail",
+					"pathName": "pages/searchDetail",
+					"query": "orderNo=123",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/work/increment",
+					"pathName": "pages/work/increment",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 15,
+					"name": "pages/work/incrementDetail",
+					"pathName": "pages/work/incrementDetail",
+					"query": "order_no=FBB02000001794&customer_id=1100000033",
 					"scene": null
 				}
 			]

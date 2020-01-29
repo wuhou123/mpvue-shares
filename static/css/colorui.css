@@ -1026,11 +1026,11 @@ button.icon.lg {
 }
 
 .cu-load.over::before {
-  content: '\e64a';
+  content: '\e725';
 }
 
 .cu-load.over::after {
-  content: '没有更多了';
+  content: '已到底';
 }
 
 .cu-load.erro::before {

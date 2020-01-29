@@ -1,24 +1,39 @@
-# mpvue-start
+# init-mpvue
 
-> mpvue 脚手架文件，方便快速生成一个带vuex、富文本转换wx-parse的微信小程序开发项目模板！
+> just a project for init-mpvue
 
 ## Build Setup
 
 ``` bash
-# 两个命令行即可生成
-npm install mpvue-start -g
+# 项目说明
+  mpvue示例模板，即开即用
+  集成vuex，request封装promise化
+  less,iconfont免配置
+  其他待更新。。。
 
-mpvue-start init 
+# 安装依赖
+yarn
 
-#项目模板文件已生产mpvue-start目录，按下面步骤开发吧
-cd mpvue-start
+# 开发时构建
+npm dev
 
-npm install
+# 打包构建
+npm build
 
-# dev
-npm run dev
+# 指定平台的开发时构建(微信、百度、头条、支付宝)
+npm dev:wx
+npm dev:swan
+npm dev:tt
+npm dev:my
 
-# build
-npm run build
+# 指定平台的打包构建
+npm build:wx
+npm build:swan
+npm build:tt
+npm build:my
 
+# 生成 bundle 分析报告
+npm run build --report
 ```
+
+For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).

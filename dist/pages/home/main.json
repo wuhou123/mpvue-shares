@@ -1,6 +1,0 @@
-{
-  "navigationBarTitleText": "韭菜日历",
-  "usingComponents": {
-    "skeletons": "/static/components/component/skeletons/index"
-  }
-}
