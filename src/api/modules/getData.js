@@ -15,3 +15,11 @@ export const queryNoticeByCache = params => {
 export const workFinish = params => {
   return $http('GET', `${HOST}/api/v1/outs/workFinish`, params)
 }
+// 全国概况
+export const ncovIndex = params => {
+  return $http('GET', `${HOST}/txapi/ncov/index`, params)
+}
+// 城市情况
+export const ncovcity = params => {
+  return $http('GET', `${HOST}/txapi/ncovcity/index`, params)
+}

@@ -7,7 +7,7 @@ module.exports = merge(prodEnv, {
   DOMAIN_NAME_ACCOUNT: '"https://account-uat.jiuyescm.com"',
   // DOMAIN_NAME_ACCOUNT: '"https://account.jiuyescm.com"',
   // DOMAIN_NAME_SERVICE: '"https://customer.qa.saas.sh-jiuye.com.cn"',
-  DOMAIN_NAME_SERVICE: '"https://c-uat.jiuyescm.com"',
+  DOMAIN_NAME_SERVICE: '"https://api.tianapi.com"',
   // DOMAIN_NAME_SERVICE: '"https://cus.jiuyescm.com"',
   // DOMAIN_NAME_SERVICE: '"http://192.168.4.102:8088"',
   // APP_KEY: '"1100000504"',

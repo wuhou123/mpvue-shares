@@ -1,8 +1,8 @@
 {
-  "name": "init-mpvue",
+  "name": "wuhan-ncov",
   "version": "1.0.0",
   "mpvueTemplateProjectVersion": "0.1.0",
-  "description": "just a project for init-mpvue",
+  "description": "just a project for wuhan-ncov",
   "author": "yf",
   "private": true,
   "scripts": {

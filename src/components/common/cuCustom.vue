@@ -16,7 +16,7 @@
 
 <script>
 export default {
-  data () {
+  data() {
     return {
       getCustomBar: 65,
       style: ''
@@ -46,13 +46,13 @@ export default {
     }
   },
   methods: {
-    BackPage () {
+    BackPage() {
       wx.navigateBack({
         delta: 1
       })
     }
   },
-  onLoad () {
+  onLoad() {
     this.getCustomBar = this.$store.state.customerHeight[1]
     let StatusBar = this.$store.state.customerHeight[0]
     let CustomBar = this.$store.state.customerHeight[1]
@@ -63,16 +63,16 @@ export default {
 </script>
 
 <style lang='less'>
-.absolute{
-  position:absolute;
-  top:0;
-  left:0
+.absolute {
+  position: absolute;
+  top: 0;
+  left: 0;
 }
-.cu-custom{
-  height:65px;
-  .cu-bar{
-    height:65px;
-    padding-top:20px
+.cu-custom {
+  height: 65px;
+  .cu-bar {
+    height: 65px;
+    padding-top: 20px;
   }
 }
 </style>

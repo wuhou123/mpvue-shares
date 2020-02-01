@@ -1,6 +1,6 @@
-# init-mpvue
+# wuhan-ncov
 
-> just a project for init-mpvue
+> just a project for wuhan-ncov
 
 ## Build Setup
 

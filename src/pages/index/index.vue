@@ -2,31 +2,30 @@
   <div class="data-config">
     <cu-custom
       bgColor="bg-white"
-      titleText="统计"
+      titleText="首页"
     ></cu-custom>
     <section class="order-data">
-      <div class="data-title fontSize-20">今日订单</div>
+      <div class="data-title fontSize-20">全国概况</div>
       <ul class="data-ul">
         <li class="data-li">
-          <p class="mb15 fontSize-18 content-bold font-DIN">{{workData.planOut || 0}}</p>
-          <p>计划出库</p>
+          <p class="mb15 fontSize-18 font-DIN text-red">{{workData.confirmedCount || ''}}</p>
+          <p>确诊病例</p>
         </li>
         <li class="data-li">
-          <p class="mb15 fontSize-18 content-bold font-DIN">{{workData.finishOut || 0}}</p>
-          <p>已出库</p>
+          <p class="mb15 fontSize-18 font-DIN text-orange">{{workData.suspectedCount || ''}}</p>
+          <p>疑似病例</p>
         </li>
         <li
           class="data-li"
-          style="border-right:none"
         >
-          <p class="mb15 fontSize-18 content-bold font-DIN">{{workData.unFinish || 0}}</p>
-          <p>未出库</p>
+          <p class="mb15 fontSize-18 content-bold font-DIN">{{workData.deadCount || ''}}</p>
+          <p>死亡病例</p>
         </li>
-        <li class="order-total font-DIN">
-          <span class="fontSize-50 text-green">
-            <numberGrow :value="setValue"></numberGrow>
-          </span>
-          <span class="text-green fontSize-18">%</span>
+        <li class="order-total font-DIN data-li">
+          <p class="fontSize-24 text-green">
+            {{workData.curedCount || ''}}
+          </p>
+          <p class="text-green fontSize-18">治愈</p>
         </li>
       </ul>
       <div class="cu-progress round xs">
@@ -40,21 +39,45 @@
     <section class="data-notice">
       <ul class="data-ul">
         <li class="data-item">
-          <p class="text-green">系统</p>
-          <p class="text-green">公告</p>
+          <p class="text-blue">{{addrName}}</p>
         </li>
-        <li
-          @click="clickNotice"
-          v-show="noticeData.title"
-        >
-          <p class="mb15 fontSize-16 content-bold text-cut text-p">{{noticeData.title}}</p>
-          <p class="text-606">发布时间：{{noticeData.publishTime}}</p>
-        </li>
-        <li
-          class="order-total right-li"
-          @click="clickNotice"
-        >
-          <span class="icon-right"></span>
+        <li>
+          <div class="mb10 flex text-p">
+          <div class="cu-capsule">
+            <div class='cu-tag bg-red'>
+              确诊
+            </div>
+            <div class="cu-tag line-red">
+              {{citysData.confirmedCount || '--'}}
+            </div>
+          </div>
+                    <div class="cu-capsule">
+            <div class='cu-tag bg-orange'>
+              疑似
+            </div>
+            <div class="cu-tag line-orange">
+               {{citysData.suspectedCount || '--'}}
+            </div>
+          </div>
+          </div>
+          <div class="flex text-p">
+            <div class="cu-capsule">
+            <div class='cu-tag bg-grey'>
+              死亡
+            </div>
+            <div class="cu-tag line-grey">
+              {{citysData.deadCount || '--'}}
+            </div>
+          </div>
+                    <div class="cu-capsule">
+            <div class='cu-tag bg-green'>
+              治愈
+            </div>
+            <div class="cu-tag line-green">
+              {{citysData.curedCount || '--'}}
+            </div>
+          </div>
+          </div>
         </li>
       </ul>
     </section>
@@ -63,59 +86,51 @@
       class="order-charts"
       v-show="!showModal"
     >
-      <div class="data-title fontSize-20">单量统计</div>
-      <ul class="date-btn">
-        <li
-          :class="btnIndex==index?'active':''"
-          v-for="(item,index) in dateList"
-          @click="changeList(index)"
-          :key="index"
-        >{{item}}天</li>
-      </ul>
+      <div class="data-title fontSize-20">新增趋势</div>
     </section>
-    <div
-      class="echarts-wrap"
-      v-show="!showModal"
-    >
+    <div class="echarts-wrap">
       <mpvue-echarts
         :echarts="echarts"
         :onInit="onInit"
         canvasId="demo-canvas"
       />
     </div>
-    <!-- 公告弹框 -->
-    <div
-      class="cu-modal"
-      :class="showModal?'show':''"
-    >
-      <div class="cu-dialog">
-        <div class="padding-xl bg-white">
-          <p class="fontSize-18 content-bold texts-center">{{noticeData.title}}</p>
-          <p class="fontSize-14 content-888 border-bottom notice-title texts-center">发布时间：{{noticeData.publishTime}}</p>
-          <div style="max-height:530rpx;overflow:auto">
-            <p v-html="noticeData.content"></p>
-          </div>
+    <section class="order-data">
+      <div class="data-title fontSize-20">省市数据</div>
+      			<!-- <view class="cu-bar bg-white solid-bottom margin-top">
+				<view class="action">
+					<text class="icon-title text-orange"></text> 国内
+				</view>
+			</view> -->
+			<div class="cu-list menu" v-for="(item,index) in listData" :key="index">
+				<div class="cu-item bg-gray" :class="item.cities?'arrow':''" @click="changeStauts(item,index)">
+					<div class="content flex">
+						<text class="text-black with50 text-cut">{{item.provinceShortName}}</text>
+            <text class="with50 text-red">{{item.confirmedCount}}</text>
+            <text class="with50 text-orange">{{item.suspectedCount}}</text>
+            <text class="with50 text-black">{{item.deadCount}}</text>
+            <text class="with50 text-green">{{item.curedCount}}</text>
+					</div>
+				</div>
+        <div class="cu-item" v-for="(val,valIndex) in item.cities" :key="valIndex" v-if="item.status">
+          <div class="content flex">
+						<text class="text-grey with50 text-cut">{{val.cityName}}</text>
+            <text class="with50 text-red">{{val.confirmedCount}}</text>
+            <text class="with50 text-orange">{{val.suspectedCount}}</text>
+            <text class="with50 text-black">{{val.deadCount}}</text>
+            <text class="with50 text-green">{{val.curedCount}}</text>
+					</div>
         </div>
-        <div class="cu-bar bg-white">
-          <div
-            class="action margin-0 flex-sub"
-            @tap="showModal=false"
-          >
-            <button class="cu-btn round line-green">我知道了</button>
-          </div>
-        </div>
-      </div>
-    </div>
+
+			</div>
+    </section>
   </div>
 </template>
 
 <script>
 import * as echarts from '../../../static/js/echarts.min'
 import mpvueEcharts from 'mpvue-echarts'
-import numberGrow from '@/components/common/numberGrow'
-import { formatTime } from '@/utils'
-import $config from '@/config'
-const { ACCESS_TOKEN } = $config
+import QQMapWX from '../../../static/js/qqmap-wx-jssdk.min.js'
 
 // echarts init
 let chart = null
@@ -135,8 +150,9 @@ let option = {
     },
     formatter: function(params) {
       if (!params[0] || !params[0].axisValue) return '暂无数据'
-      params = params[0]
-      return params.axisValue + ' : ' + params.value
+      let data1 = params[0]
+      let data2 = params[1]
+      return `${data1.axisValue}\n确诊：${data1.value}\n疑似：${data2.value}`
     },
     position: function(point, params, dom, rect, size) {
       let x = 0 // x坐标位置
@@ -189,33 +205,54 @@ let option = {
   },
   series: [
     {
-      data: [1],
+      data: [],
       type: 'line',
       symbol: 'circle',
       symbolSize: 5,
-      color: '#019885',
+      color: '#e54d42',
       lineStyle: {
-        color: '#019885'
+        color: '#e54d42'
       },
       itemStyle: {
-        color: '#4FD0C7',
+        color: '#e54d42',
         borderWidth: 1,
         borderColor: '#FFF'
-      },
-      label: {
-        show: false,
-        position: 'top',
-        textStyle: {
-          color: '#019885',
-          fontSize: 12
-        }
       },
       areaStyle: {
         normal: {
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
             {
               offset: 0,
-              color: '#019885'
+              color: '#e54d42'
+            },
+            {
+              offset: 1,
+              color: '#e6f8f7'
+            }
+          ])
+        }
+      }
+    },
+    {
+      data: [],
+      type: 'line',
+      symbol: 'circle',
+      symbolSize: 5,
+      color: '#FFBE53',
+      lineStyle: {
+        color: '#FFBE53'
+      },
+      itemStyle: {
+        color: '#FFBE53',
+        borderWidth: 1,
+        borderColor: '#FFF'
+      },
+      areaStyle: {
+        normal: {
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            {
+              offset: 0,
+              color: '#FFBE53'
             },
             {
               offset: 1,
@@ -227,6 +264,7 @@ let option = {
     }
   ]
 }
+
 function initChart(canvas, width, height) {
   // echarts
   chart = echarts.init(canvas, null, {
@@ -240,174 +278,144 @@ function initChart(canvas, width, height) {
 export default {
   name: 'data',
   components: {
-    mpvueEcharts,
-    numberGrow
+    mpvueEcharts
   },
   data() {
     return {
       workData: {},
-      noticeData: {},
-      setValue: 0,
-      dateList: [7, 15, 30],
-      btnIndex: 0,
+      citysData: {},
+      listData: [],
       showModal: false,
       onInit: initChart,
       echarts,
       setWidth: '0%',
-      times: [],
       xdatas: [],
       chart: '',
       isRepact: false,
-      hitDate: 0
+      qqmapsdk: '',
+      addrName: ''
     }
   },
-
+  onLoad() {
+    if (!this.qqmapsdk) {
+      this.qqmapsdk = new QQMapWX({
+        key: '4ZEBZ-PKLCF-2DZJH-NJARG-M4DDF-QNF4C'
+      })
+      this.getLocation()
+    }
+  },
   methods: {
+    getLocation() {
+      wx.getLocation({
+        success: res => {
+          this.getAddr(res.latitude, res.longitude)
+        },
+        fail: error => {
+          console.log('error', error)
+        }
+      })
+    },
+    getAddr(latitude, longitude) {
+      this.qqmapsdk.reverseGeocoder({
+        location: {
+          latitude: latitude,
+          longitude: longitude
+        },
+        success: res => {
+          let data = res.result.ad_info || {}
+          this.addrName = data.city.replace('市', '')
+          console.log('city', data)
+        }
+      })
+    },
+    changeStauts(item, index) {
+      console.log(item, index)
+      item.status = !item.status
+    },
     changeList(index) {
       this.btnIndex = index
       this.getList()
     },
     getList() {
-      if (this.isRepact) return
-      let preDate =
-        +new Date() - 3600 * 24 * this.dateList[this.btnIndex] * 1000
-      let nextDate = +new Date() - 3600 * 24 * 1 * 1000
-      let params = {
-        data: {
-          customerId: this.$store.state.user.customerId,
-          beginTime: formatTime(preDate, 'YYYY-MM-DD'),
-          endTime: formatTime(nextDate, 'YYYY-MM-DD')
-        }
-      }
-      this.times = []
       this.xdatas = []
       this.isRepact = true
-      mpvue.showToast({ icon: 'loading', title: '加载图表中...' })
-      this.$api.getData
-        .trend(params)
-        .then(res => {
-          mpvue.hideLoading()
-          this.isRepact = false
-          let data = res.items || []
-          data.forEach(v => {
-            this.times.push(v.totalqty)
-            this.xdatas.push(formatTime(v.cretime, 'MM.DD'))
-          })
-          option.series[0].data = this.times
-          option.xAxis.data = this.xdatas
-          chart.setOption(option)
-        })
-        .catch(error => {
-          this.isRepact = false
-          mpvue.hideLoading()
-          console.log(error)
-        })
-    },
-    getNotice() {
-      let params = {
-        data: {}
-      }
-      this.$api.getData
-        .queryNoticeByCache(params)
-        .then(res => {
-          if (res.items) {
-            this.noticeData = JSON.parse(res.items[0])[0]
-            this.noticeData.publishTime = formatTime(
-              this.noticeData.publishTime,
-              'YYYY-MM-DD'
-            )
-            // 公告是否展示
-            if (
-              this.noticeData.publishTime ===
-              formatTime(new Date(), 'YYYY-MM-DD')
-            )
-              this.openModal()
-          }
-        })
-        .catch(error => console.log(error))
-    },
-    getWorkFinish() {
       let params = {
         data: {
-          customerId: this.$store.state.user.customerId
+          key: '2587807a9f638ba5a1e72c998019331b'
         }
       }
-      this.workData = {}
-      this.setValue = 0
-      this.setWidth = '0%'
       this.$api.getData
-        .workFinish(params)
+        .ncovIndex(params)
         .then(res => {
-          this.workData = res.items || {}
-          this.workData.unFinish =
-            this.workData.planOut - this.workData.finishOut
-          this.setValue =
-            Math.round(this.workData.finishOut / this.workData.planOut * 100) ||
-            0
-          this.setWidth = `${this.setValue}%`
+          console.log('res1', res)
+          //测试数据
+          this.workData = res.newslist[0].desc || ''
+          this.setWidth =
+            this.workData.curedCount / this.workData.confirmedCount * 100 + '%'
+          //趋势数据
+          this.setInit(res.newslist[0].case || [])
+        })
+        .catch(error => console.log(error))
+      //测试城市数据
+      this.$api.getData
+        .ncovcity(params)
+        .then(res => {
+          this.setCityInit(res.newslist || [])
         })
         .catch(error => console.log(error))
     },
-    clickNotice() {
-      // 防抖
-      let cureDate = +new Date() - this.hitDate
-      this.hitDate = +new Date()
-      if (cureDate < 300) return
-      mpvue.navigateTo({ url: '/pages/notice' })
-    },
-    openModal() {
-      if (this.noticeData.type === '1') {
-        let readId = wx.getStorageSync('readId')
-        if (readId !== this.noticeData.id) {
-          setTimeout(() => {
-            this.noticeData.content = this.noticeData.content
-              .replace(/<img/gi, '<img style="max-width:100%;height:auto" ')
-              .replace(
-                /<table/gi,
-                '<table style="border: solid 1px #999;border-collapse: separate;border-spacing: 1px;margin: 0 auto;empty-cells: hide;" '
-              )
-              .replace(
-                /<td/gi,
-                '<td style="border:1px solid #999;padding:5px" '
-              )
-            this.showModal = true
-          }, 3000)
-          wx.setStorageSync('readId', this.noticeData.id)
-        }
-      }
-    },
-    async getUserCustomers() {
-      const res = await this.$api.user.getUserCustomers({ customer_name: '' })
-      if (res.code === 'SUCCESS') {
-        const items = res.items
-        this.companyList = items
-        const company = items.find(item => item.defaultFlag === 1)
-        if (company) {
-          this.$store.commit('user/setCustomerId', company.customerId)
-          this.getList()
-          this.getNotice()
-          this.getWorkFinish()
-        } else
-          mpvue.showToast({
-            title: '该账号未配置商家，请联系管理员',
-            icon: 'none'
+    getCityData(cityData) {
+      let cityArray = cityData || []
+      cityArray.forEach(v => {
+        v.status = false
+        if (v.provinceShortName === this.addrName) return (this.citysData = v)
+        if (v.cities && v.cities.length > 0) {
+          v.cities.forEach(val => {
+            if (val.cityName === this.addrName) this.citysData = val
           })
-      }
+        }
+      })
+      this.listData = cityArray
     },
-    initMethods() {},
-    setInit() {
-      if (chart) this.initMethods()
+    getNotice() {},
+    getWorkFinish() {},
+    clickNotice() {},
+    openModal() {},
+    async getUserCustomers() {},
+    initMethods(dataJson) {
+      let caseData = dataJson || []
+      let xdata1 = []
+      let xdata2 = []
+      caseData.forEach(v => {
+        option.xAxis.data.push(v.provinceShortName)
+        xdata1.push(v.confirmedCount)
+        xdata2.push(v.suspectedCount)
+      })
+      option.series[0].data = xdata1
+      option.series[1].data = xdata2
+      chart.setOption(option)
+    },
+    setInit(dataJson) {
+      if (chart) this.initMethods(dataJson)
       else {
         setTimeout(() => {
-          if (chart) this.initMethods()
-          else this.setInit()
+          if (chart) this.initMethods(dataJson)
+          else this.setInit(dataJson)
+        }, 100)
+      }
+    },
+    setCityInit(cityData) {
+      if (this.addrName) this.getCityData(cityData)
+      else {
+        setTimeout(() => {
+          if (this.addrName) this.getCityData(cityData)
+          else this.setCityInit(cityData)
         }, 100)
       }
     }
   },
-  onShow() {
-    // echarts dom加载问题
-    this.setInit()
+  created() {
+    this.getList()
   }
 }
 </script>
@@ -427,16 +435,14 @@ export default {
   justify-content: flex-start;
   align-items: center;
   background: #fff;
-  .order-total {
-    width: 190rpx;
-    text-align: right;
-    margin-left: auto;
-  }
   .data-li {
-    width: 160rpx;
+    width: 25%;
     padding: 0 22rpx;
     text-align: center;
     border-right: 1px solid #dedede;
+  }
+  .order-total {
+    border-right: none;
   }
   .data-item {
     width: 100rpx;
@@ -450,6 +456,7 @@ export default {
   }
   .text-p {
     width: 450rpx;
+    justify-content: space-between;
   }
 }
 .data-title {
@@ -502,5 +509,14 @@ export default {
 }
 .cu-dialog {
   margin-left: calc(50% - 340rpx);
+}
+.with50 {
+  width: 20%;
+}
+.cu-list.menu > .cu-item {
+  background: #f0f0f0;
+}
+.cu-capsule {
+  width: 200rpx;
 }
 </style>
